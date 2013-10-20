@@ -36,15 +36,15 @@
 
 	    <ul class="nav">   
 	      <li {% block classHome %}{% endblock %}><a href="{% url dormbase.views.home %}">Home</a></li>
-	      <li {% block classDirectory %}{% endblock %}><a href="{% url dormbase.core.views.directory %}">Directory</a></li>
-	      <li {% block classPersonal %}{% endblock %}><a href="{% url dormbase.personal.views.profile %}">Personal</a></li>
+	      <li {% block classDirectory %}{% endblock %}><a href="{% url residents.views.directory %}">Directory</a></li>
+	      <li {% block classPersonal %}{% endblock %}><a href="{% url personal.views.profile %}">Personal</a></li>
 	      <li class="dropdown {% block classMediaContent %}{% endblock %}">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="">
 		  Media
 		  <b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-		  <li><a href="{% url dormbase.movie.views.genre_list %}">Movies</a></li>
+		  <li><a href="{% url movie.views.genre_list %}">Movies</a></li>
 		</ul>
 	      </li>
 	      <li class="dropdown {% block classFacilities %}{% endblock %}">
@@ -53,13 +53,13 @@
 		  <b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-		  <li><a href="{% url dormbase.menus.views.menus %}">Dining</a></li>
-		  <li><a href="{% url dormbase.nextbus.views.nextbus %}">Shuttle</a></li>
-		  <li><a href="{% url dormbase.laundry.views.laundry %}">Laundry View</a></li>
-		  <li><a href="{% url dormbase.facilities.views.report %}">Report a Problem</a></li>
+		  <li><a href="{% url menus.views.menus %}">Dining</a></li>
+		  <li><a href="{% url nextbus.views.nextbus %}">Shuttle</a></li>
+		  <li><a href="{% url laundry.views.laundry %}">Laundry View</a></li>
+		  <li><a href="{% url facilities.views.report %}">Report a Problem</a></li>
 		</ul>
 	      </li>
-	      <li {% block classDesk %}{% endblock %}><a href="{% url dormbase.desk.views.dashboard %}">Desk</a></li>
+	      <li {% block classDesk %}{% endblock %}><a href="{% url desk.views.dashboard %}">Desk</a></li>
 	    </ul>
             {% if user.email %}
                 <span class="user pull-right">

@@ -18,8 +18,8 @@
             <h3>Results</h3>
 
             {% for result in page.object_list %}
-                {% if result.content_type == "core.resident" %}
-	        {% include "search/includes/core/resident.html" %}
+                {% if result.content_type == "residents.resident" %}
+	        {% include "search/includes/residents/resident.html" %}
                 {% else %}
 	        {% if result.content_type == "movie.movie" %}
 	        {% include "search/includes/movie/movie.html" %}

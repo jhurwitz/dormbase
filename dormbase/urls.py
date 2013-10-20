@@ -17,9 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls.defaults import patterns, include, url
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-import settings
+from django.conf.urls import patterns, include, url
 
 import autocomplete_light
 autocomplete_light.autodiscover()
@@ -39,7 +37,7 @@ urlpatterns = patterns('',
     (r'^accounts/', include('registration.backends.default.urls')),
 
     # Directory
-    (r'^directory/', include('core.urls')),
+    (r'^directory/', include('residents.urls')),
 
     # Movie
     (r'^movies/', include('movie.urls')),
@@ -51,7 +49,7 @@ urlpatterns = patterns('',
     (r'package/', include('package.urls')),
 
     # Haystack
-    (r'^search/', include('haystack.urls')),
+    # (r'^search/', include('haystack.urls')),
 
     # Photologue
     (r'^photologue/', include('photologue.urls')),
@@ -64,26 +62,21 @@ urlpatterns = patterns('',
 
     # Laundry
     (r'^laundry/', include('laundry.urls')),
-    
+
     # Facilities
     (r'^facilities/', include('facilities.urls')),
 
     # Resources
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-             'document_root': settings.MEDIA_ROOT
-             }), 
+    # url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+    #         'document_root': settings.MEDIA_ROOT
+    #         }),
 
-    url(r'^static/(?P<path>.*)$', 'django.views.static.serve',{
-             'document_root': settings.STATIC_ROOT,
-             }),
+    # url(r'^static/(?P<path>.*)$', 'django.views.static.serve',{
+    #         'document_root': settings.STATIC_ROOT,
+    #         }),
 
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'autocomplete/', include('autocomplete_light.urls')),
                        
 )
-urlpatterns += staticfiles_urlpatterns()

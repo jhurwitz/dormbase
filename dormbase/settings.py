@@ -128,19 +128,21 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'registration',
     'dormbase',
-    'haystack',
+    # 'haystack',
     'photologue',
     'south',
     'autocomplete_light',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'core',
+    'desk',
+    'facilities',
+    'laundry',
+    'menus',
     'movie',
+    'nextbus',
     'package',
     'personal',
-    'nextbus',
-    'menus',
-    'laundry',
+    'residents',
 )
 
 # A sample logging configuration. The only tangible logging

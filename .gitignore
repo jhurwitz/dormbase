@@ -18,3 +18,4 @@ db.dat
 dormbase/settings_private.py
 dormbase/whoosh_index
 dormbase/static/less
+dormbase/media/photologue
