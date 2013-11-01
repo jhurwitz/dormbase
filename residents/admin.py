@@ -17,9 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from residents.models import *
+from residents.models import Resident
 from django.contrib import admin
 
 admin.site.register(Resident)
-admin.site.register(Group)
-admin.site.register(GroupMember)

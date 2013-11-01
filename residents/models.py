@@ -57,29 +57,3 @@ class Resident(AbstractResident):
     def get_absolute_url(self):
         return ('dormbase.personal.views.profile_username', (),
                 {'username': self.athena})
-
-class Group(models.Model):
-    name = models.CharField(max_length = 200)
-    mailingListName = models.CharField(max_length = 200, validators = [validate_slug])
-    autoSync = models.BooleanField() # auto mailing list sync
-    owner = models.ForeignKey("self", related_name = "groupOwner", blank = True, null = True)
-    memacl = models.ForeignKey("self", related_name = "groupMemacl", blank = True, null = True)
-    members = models.ManyToManyField(Resident, through='GroupMember')
-
-    def __unicode__(self):
-        return self.name
-
-#    def save(self, *args, **kwargs):
-#        if not mailingListNameOK(args['mailingListName']):
-#            return
-#        super(Blog, self).save(*args, **kwargs) # Call the "real" save() method.
-
-
-class GroupMember(models.Model):
-    member = models.ForeignKey(Resident)
-    group = models.ForeignKey(Group)
-    position = models.CharField(max_length = 200, blank = True, null = True) # used for government positions. can be null
-    autoMembership = models.BooleanField() # true if sync'd to this group via script
-
-    def __unicode__(self):
-        return str(self.member) + ' -> ' + str(self.group)
