@@ -23,7 +23,7 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
 from django.contrib.auth.models import User
-from residents.models import Resident, Room
+from residents.models import Resident
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 # from haystack.query import SearchQuerySet

@@ -18,20 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.auth.models import User
-from residents.models import Resident, Room, Group, GroupMember
+from residents.models import Resident, Group, GroupMember
 import random
-import robotic_mailman    
+import robotic_mailman
 
 def import_test_directory():
     f = open('residents/test_names.txt')
-    rooms = []    
     MAX_ROOM = 350
-    for i in range(0, MAX_ROOM):
-        r = Room(number = str(i))
-        r.save()
-        rooms.extend([r])
-
-    print 'Room COMPLETE'
 
     for line in f.readlines():
         line = line.strip('\n')
@@ -47,7 +40,7 @@ def import_test_directory():
         u = User(first_name = firstname, last_name = lastname, username = username)
         u.save()
         r = Resident(user = u,
-                     room = random.choice(rooms),
+                     room = random.randint(1, MAX_ROOM),
                      athena = username,
                      year = random.choice([2012, 2013, 2014, 2015]),
                      livesInDorm = True)
