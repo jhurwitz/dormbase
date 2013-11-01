@@ -22,11 +22,7 @@ from django.core.validators import validate_slug
 from django.contrib.auth.models import User as AuthUser
 
 
-class AbstractResident(models.Model):
-    """
-    Abstract class containing all non-dorm-specific user attributes.
-    Maintains a 1-1 with the auth app user module.
-    """
+class Resident(models.Model):
     user = models.ForeignKey(AuthUser, unique = True)
     room = models.CharField(max_length = 10, blank = False)
     athena  = models.CharField(max_length = 8, verbose_name = "athena id") # no "@mit.edu" suffix
@@ -35,6 +31,9 @@ class AbstractResident(models.Model):
     url = models.CharField(max_length = 256, blank = True)
     about = models.TextField(blank = True)
     livesInDorm = models.BooleanField()
+    title = models.CharField(max_length = 50, blank = True)
+    cell = models.CharField(max_length = 20, blank = True)
+    hometown = models.CharField(max_length = 200, blank = True)
 
     def __unicode__(self):
         return self.athena
@@ -42,18 +41,7 @@ class AbstractResident(models.Model):
     def getFullName(self):
         return self.user.first_name + ' ' + self.user.last_name
 
-    class Meta:
-        abstract = True
-
-class Resident(AbstractResident):
-    """
-    This class contians user attributes which are dorm-specific.
-    """
-    title = models.CharField(max_length = 50, blank = True)
-    cell = models.CharField(max_length = 20, blank = True)
-    hometown = models.CharField(max_length = 200, blank = True)
-
     @models.permalink
     def get_absolute_url(self):
-        return ('dormbase.personal.views.profile_username', (),
+        return ('personal.views.profile_username', (),
                 {'username': self.athena})
