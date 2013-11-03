@@ -27,8 +27,17 @@ class Resident(models.Model):
     room = models.CharField(max_length = 10, blank = False)
     year = models.IntegerField()
 
-    def __unicode__(self):
+    @property
+    def full_name(self):
+        return "%s %s" % (self.user.first_name, self.user.last_name)
+
+    @property
+    def username(self):
         return self.user.username
 
-    def getFullName(self):
-        return self.user.first_name + ' ' + self.user.last_name
+    @property
+    def email(self):
+        return self.user.email
+
+    def __unicode__(self):
+        return self.username

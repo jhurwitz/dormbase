@@ -30,7 +30,7 @@ def package_get(request):
     packages = []
     for p in Package.objects.all():
         packages.append({
-                'recipient': p.recipient.getFullName(),
+                'recipient': p.recipient.full_name,
                 'location': p.location,
                 'id': p.id,
                 })
@@ -46,7 +46,7 @@ def package_add(request):
                         location = cd['location'],)
             p.save()
 
-            jsonPackage = json.dumps({'recipient': p.recipient.getFullName(),
+            jsonPackage = json.dumps({'recipient': p.recipient.full_name,
                                       'location': p.location,
                                       'id': p.id})
 
