@@ -19,29 +19,16 @@
 
 from django.db import models
 from django.core.validators import validate_slug
-from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.models import User
 
 
 class Resident(models.Model):
-    user = models.ForeignKey(AuthUser, unique = True)
+    user = models.ForeignKey(User, unique = True)
     room = models.CharField(max_length = 10, blank = False)
-    athena  = models.CharField(max_length = 8, verbose_name = "athena id") # no "@mit.edu" suffix
     year = models.IntegerField()
-    altemail = models.EmailField(verbose_name="non-MIT email", blank = True)
-    url = models.CharField(max_length = 256, blank = True)
-    about = models.TextField(blank = True)
-    livesInDorm = models.BooleanField()
-    title = models.CharField(max_length = 50, blank = True)
-    cell = models.CharField(max_length = 20, blank = True)
-    hometown = models.CharField(max_length = 200, blank = True)
 
     def __unicode__(self):
-        return self.athena
+        return self.user.username
 
     def getFullName(self):
         return self.user.first_name + ' ' + self.user.last_name
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('personal.views.profile_username', (),
-                {'username': self.athena})
