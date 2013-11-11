@@ -50,7 +50,7 @@
         $("#reserve-alert").hide();
         $("#movie-form").submit(function(){
             var movie = $(this).serialize();
-            $.post("{% url movie.views.movie_reserve %}", movie).success(function(){
+            $.post("{% url 'movie.views.movie_reserve' %}", movie).success(function(){
                 $("#reserve-btn").hide();
                 $("#reserve-alert").show();
                 })

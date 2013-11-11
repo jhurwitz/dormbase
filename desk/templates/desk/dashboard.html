@@ -101,7 +101,7 @@
 
 <div id="ajax-helper" style="display:none">
   {% csrf_token %}
-  <div style='display:none'><input type='hidden' name='post-url' value="{% url package.views.package_remove %}" /></div>
+  <div style='display:none'><input type='hidden' name='post-url' value="{% url 'package.views.package_remove' %}" /></div>
 </div>
 
 <script src="{{ STATIC_URL }}js/tokeninput.js"></script>
@@ -136,7 +136,7 @@ function addPackageRow(package){
     $("#package-list > tbody:last").append(makePackageRow(package));
     function packageRelease() {
         var package = $(this).serialize();
-        $.post("{% url package.views.package_remove %}", package, function(data){
+        $.post("{% url 'package.views.package_remove' %}", package, function(data){
             var id = "#" + data.id;
             $(id).remove();
         }, "json");
@@ -148,14 +148,14 @@ function addPackageRow(package){
 }
 
 $(function() {
-    $.getJSON("{% url package.views.package_get %}", 
+    $.getJSON("{% url 'package.views.package_get' %}", 
     function(packages) {
         $("#package-list tbody").html("");
         for (var i in packages) {
             addPackageRow(packages[i]);
         }
     });
-    $.getJSON("{% url movie.views.movie_get %}", 
+    $.getJSON("{% url 'movie.views.movie_get' %}", 
     function(movies) {
         $("#movie-list tbody").html("");
         for (var i in movies) {
@@ -167,12 +167,12 @@ $(function() {
 
     $("#package-form").submit(function(){
         var package = $(this).serialize();
-        $.post("{% url package.views.package_add %}", package, function(data){addPackageRow(data);}, "json");
+        $.post("{% url 'package.views.package_add' %}", package, function(data){addPackageRow(data);}, "json");
         return false;
     });
     $("#movie-form").submit(function(){
         var movie = $(this).serialize();
-        $.post("{% url movie.views.movie_reserve %}", movie, function(data){
+        $.post("{% url 'movie.views.movie_reserve' %}", movie, function(data){
             $("#movie-list > tbody:last").append(makeMovieRow(data));
         }, "json");
         return false;

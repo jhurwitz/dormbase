@@ -4,7 +4,7 @@
 
 <div id="main">
   <div id="left">
-    <a href="{% url residents.views.directory %}" id="search" class="feature">Search</a>
+    <a href="{% url 'residents.views.directory' %}" id="search" class="feature">Search</a>
   </div>
   <div id="right">
     <div id="menu" class="info-box">
@@ -57,7 +57,7 @@
   function search() {
   $.ajax({
   type: "GET",
-  url: "{% url residents.views.directory_json %}",
+  url: "{% url 'residents.views.directory_json' %}",
   data: $("#searchform").serialize(),
   }).done(function(search_json) {
   $("#results").html("");

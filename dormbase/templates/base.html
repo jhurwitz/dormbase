@@ -32,19 +32,19 @@
             <span class="icon-bar"></span>
 	  </a>
 
-	  <a class="brand" href="{% url dormbase.views.home %}">dormbase</a>
+	  <a class="brand" href="{% url 'dormbase.views.home' %}">dormbase</a>
 
 	    <ul class="nav">   
-	      <li {% block classHome %}{% endblock %}><a href="{% url dormbase.views.home %}">Home</a></li>
-	      <li {% block classDirectory %}{% endblock %}><a href="{% url residents.views.directory %}">Directory</a></li>
-	      <li {% block classPersonal %}{% endblock %}><a href="{% url personal.views.profile %}">Personal</a></li>
+	      <li {% block classHome %}{% endblock %}><a href="{% url 'dormbase.views.home' %}">Home</a></li>
+	      <li {% block classDirectory %}{% endblock %}><a href="{% url 'residents.views.directory' %}">Directory</a></li>
+	      <li {% block classPersonal %}{% endblock %}><a href="{% url 'personal.views.profile' %}">Personal</a></li>
 	      <li class="dropdown {% block classMediaContent %}{% endblock %}">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="">
 		  Media
 		  <b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-		  <li><a href="{% url movie.views.genre_list %}">Movies</a></li>
+		  <li><a href="{% url 'movie.views.genre_list' %}">Movies</a></li>
 		</ul>
 	      </li>
 	      <li class="dropdown {% block classFacilities %}{% endblock %}">
@@ -53,24 +53,24 @@
 		  <b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-		  <li><a href="{% url menus.views.menus %}">Dining</a></li>
-		  <li><a href="{% url nextbus.views.nextbus %}">Shuttle</a></li>
-		  <li><a href="{% url laundry.views.laundry %}">Laundry View</a></li>
-		  <li><a href="{% url facilities.views.report %}">Report a Problem</a></li>
+		  <li><a href="{% url 'menus.views.menus' %}">Dining</a></li>
+		  <li><a href="{% url 'nextbus.views.nextbus' %}">Shuttle</a></li>
+		  <li><a href="{% url 'laundry.views.laundry' %}">Laundry View</a></li>
+		  <li><a href="{% url 'facilities.views.report' %}">Report a Problem</a></li>
 		</ul>
 	      </li>
-	      <li {% block classDesk %}{% endblock %}><a href="{% url desk.views.dashboard %}">Desk</a></li>
+	      <li {% block classDesk %}{% endblock %}><a href="{% url 'desk.views.dashboard' %}">Desk</a></li>
 	    </ul>
             {% if user.email %}
                 <span class="user pull-right">
-                    <span class="username">{{ user.email }}</span> | <a href="{% url django.contrib.auth.views.logout %}">Log out</a>
+                    <span class="username">{{ user.email }}</span> | <a href="{% url 'django.contrib.auth.views.logout' %}">Log out</a>
                 </span>
             {% else %}
                 <span class="user pull-right">
-                    <a href="{% url django.contrib.auth.views.login %}">Log in</a>
+                    <a href="{% url 'django.contrib.auth.views.login' %}">Log in</a>
                 </span>
             {% endif %}
-	    <form class="navbar-search pull-right" action="{% url dormbase.views.home %}search/" method="get">
+	    <form class="navbar-search pull-right" action="{% url 'dormbase.views.home' %}search/" method="get">
 	      <input type="text" class="search-query" placeholder="Search" name="q">
 	    </form>
 	  </div>
