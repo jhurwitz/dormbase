@@ -45,9 +45,6 @@ urlpatterns = patterns('',
     # Packages
     (r'package/', include('package.urls')),
 
-    # Haystack
-    # (r'^search/', include('haystack.urls')),
-
     # Photologue
     (r'^photologue/', include('photologue.urls')),
 

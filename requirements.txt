@@ -1,10 +1,7 @@
 django>=1.6,<1.7
 django-autocomplete-light
 django-photologue
-django-haystack
 South==0.7.6
-pysolr
 feedparser
 lxml
-whoosh
 django-registration
