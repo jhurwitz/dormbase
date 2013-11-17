@@ -30,9 +30,7 @@
 	  <hr>
 	  <form id="movie-form" class="form-inline">
 	    {% csrf_token %}
-	    {{movieForm.imdbId}}
 	    <label>and</label>
-	    {{movieForm.checkedOutBy}}
 	    <button type="submit" class="btn btn-primary btn-small">Checkout</button>
 	  </form>
 
@@ -107,15 +105,6 @@
 <script src="{{ STATIC_URL }}js/tokeninput.js"></script>
 
 <script type="text/javascript">
-function makeMovieRow(row) {
-    return "" + 
-        "<tr>" +
-        " <td>" + row.checkedOutBy + "</td>" +
-        " <td>" + row.title + "</td>" + 
-        " <td><button class='btn btn-small pull-right'>Release</button></td>" +
-        "</tr>";
-}
-
 function makePackageRow(row) {
     return "" +
         "<tr" + " id='p" + row.id + "'>" +
@@ -155,26 +144,11 @@ $(function() {
             addPackageRow(packages[i]);
         }
     });
-    $.getJSON("{% url 'movie.views.movie_get' %}", 
-    function(movies) {
-        $("#movie-list tbody").html("");
-        for (var i in movies) {
-            $("#movie-list > tbody:last").append(makeMovieRow(movies[i]));
-;
-        }
-    });
     $("#myTab").tab('show');
 
     $("#package-form").submit(function(){
         var package = $(this).serialize();
         $.post("{% url 'package.views.package_add' %}", package, function(data){addPackageRow(data);}, "json");
-        return false;
-    });
-    $("#movie-form").submit(function(){
-        var movie = $(this).serialize();
-        $.post("{% url 'movie.views.movie_reserve' %}", movie, function(data){
-            $("#movie-list > tbody:last").append(makeMovieRow(data));
-        }, "json");
         return false;
     });
 

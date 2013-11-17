@@ -34,19 +34,10 @@
 
 	  <a class="brand" href="{% url 'dormbase.views.home' %}">dormbase</a>
 
-	    <ul class="nav">   
+	    <ul class="nav">
 	      <li {% block classHome %}{% endblock %}><a href="{% url 'dormbase.views.home' %}">Home</a></li>
 	      <li {% block classDirectory %}{% endblock %}><a href="{% url 'residents.views.directory' %}">Directory</a></li>
 	      <li {% block classPersonal %}{% endblock %}><a href="{% url 'personal.views.profile' %}">Personal</a></li>
-	      <li class="dropdown {% block classMediaContent %}{% endblock %}">
-		<a class="dropdown-toggle" data-toggle="dropdown" href="">
-		  Media
-		  <b class="caret"></b>
-		</a>
-		<ul class="dropdown-menu">
-		  <li><a href="{% url 'movie.views.genre_list' %}">Movies</a></li>
-		</ul>
-	      </li>
 	      <li class="dropdown {% block classFacilities %}{% endblock %}">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="">
 		  Facilities
@@ -75,12 +66,12 @@
 	    </form>
 	  </div>
 	</div>
-      
+
     </header>
-    
+
     {% block content %}
     {% endblock %}
-    
+
     <footer>
       <hr>
       <p class="pull-left">Want to help out? Email us at <a href="mailto:dormbase@mit.edu">dormbase@mit.edu</a>.</p>
@@ -89,14 +80,15 @@
       width="40" height="40" />
 	<p class="pull-right"> &copy Dormbase 2012 </p>
     </footer>
-    
-    
+
+
     <script type="text/javascript">
       $(function() {
       $(".nav-collapse").collapse();
       });
     </script>
-    
+
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-transition.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-alert.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-modal.js"></script>
@@ -109,7 +101,7 @@
     <script src="{{ STATIC_URL }}js/bootstrap-collapse.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-carousel.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
-    
+
 
   </body>
 </html>

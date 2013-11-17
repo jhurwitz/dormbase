@@ -23,11 +23,9 @@ os.environ["DJANGO_SETTINGS_MODULE"] = 'dormbase.settings'
 
 from residents.populate import *
 from package.populate import *
-from movie.populate import *
 
 def import_test_database():
     import_test_directory()
     import_test_packages()
-    import_test_movies()
 
 import_test_database()

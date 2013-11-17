@@ -44,7 +44,6 @@ INSTALLED_APPS = (
     'facilities',
     'laundry',
     'menus',
-    'movie',
     'nextbus',
     'package',
     'personal',

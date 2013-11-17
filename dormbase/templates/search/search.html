@@ -21,8 +21,6 @@
                 {% if result.content_type == "residents.resident" %}
 	        {% include "search/includes/residents/resident.html" %}
                 {% else %}
-	        {% if result.content_type == "movie.movie" %}
-	        {% include "search/includes/movie/movie.html" %}
 	        {% else %}
                 <p>
                     <a href="{{ result.object.get_absolute_url '}}">{{' result.object }}</a>

@@ -39,9 +39,6 @@ urlpatterns = patterns('',
     # Directory
     (r'^directory/', include('residents.urls')),
 
-    # Movie
-    (r'^movies/', include('movie.urls')),
-
     # Desk
     (r'^desk/', include('desk.urls')),
 

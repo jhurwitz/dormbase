@@ -24,7 +24,6 @@ from django import forms
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from dormbase.package.models import PackageForm
-from dormbase.movie.models import MovieForm
 from dormbase.core.models import Resident
 from dormbase.personal.models import Guest
 import autocomplete_light
@@ -46,9 +45,7 @@ class GuestSigninForm(forms.Form):
 
 def dashboard(request):
     pf = PackageForm()
-    mf = MovieForm()
     payload = {'packageForm': pf,
-               'movieForm': mf,
                'guestForm': GuestSigninForm()}
 
     return render_to_response('desk/dashboard.html', payload, context_instance = RequestContext(request))
