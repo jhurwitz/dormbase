@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'photologue',
     'registration',
     'autocomplete_light',
+    'common',
     'desk',
     'facilities',
     'laundry',

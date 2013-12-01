@@ -24,8 +24,9 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from django.conf import settings
+from common.lib import ValidateOnSaveMixin
 
-class Resident(models.Model):
+class Resident(ValidateOnSaveMixin, models.Model):
     STUDENT     = 'STU'
     HOUSEMASTER = 'HM'
     GRT         = 'GRT'
