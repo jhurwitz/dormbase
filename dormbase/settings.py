@@ -108,5 +108,11 @@ TEMPLATE_DIRS = (
 
 SITE_ID = 1
 
+# options that each dorm ("site") can customize
+
+IS_UNDERGRAD_DORM = True
+
+# execute private settings file
+
 if os.path.exists("settings_private.py"):
     execfile("settings_private.py")

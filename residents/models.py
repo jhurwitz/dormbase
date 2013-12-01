@@ -19,13 +19,71 @@
 
 from django.db import models
 from django.core.validators import validate_slug
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
+from django.conf import settings
 
 class Resident(models.Model):
-    user = models.ForeignKey(User, unique = True)
-    room = models.CharField(max_length = 10, blank = False)
-    year = models.IntegerField()
+    STUDENT     = 'STU'
+    HOUSEMASTER = 'HM'
+    GRT         = 'GRT'
+    AD          = 'AD'
+    ROLE_CHOICES = (
+        (STUDENT,     'Student'),
+        (HOUSEMASTER, 'Housemaster'),
+        (GRT,         'Graduate Resident Tutor'),
+        (AD,          'Area Director'),
+    )
+
+    if settings.IS_UNDERGRAD_DORM:
+        FRESHMAN    = 'FR'
+        SOPHOMORE   = 'SO'
+        JUNIOR      = 'JR'
+        SENIOR      = 'SR'
+        SUPERSENIOR = 'SS'
+        YEAR_CHOICES = (
+            (FRESHMAN,    'Freshman'),
+            (SOPHOMORE,   'Sophomore'),
+            (JUNIOR,      'Junior'),
+            (SENIOR,      'Senior'),
+            (SUPERSENIOR, 'Super-senior'),
+        )
+    else:
+        GRAD1       = 'G1'
+        GRAD2       = 'G2'
+        GRAD3       = 'G3'
+        GRAD4       = 'G4'
+        GRAD5       = 'G5'
+        GRAD6       = 'G6'
+        GRAD7       = 'G7'
+        YEAR_CHOICES = (
+            (GRAD1, 'G1'),
+            (GRAD2, 'G2'),
+            (GRAD3, 'G3'),
+            (GRAD4, 'G4'),
+            (GRAD5, 'G5'),
+            (GRAD6, 'G6'),
+            (GRAD7, 'G7'),
+        )
+
+    user = models.OneToOneField(User, primary_key=True)
+    dorm = models.ForeignKey(Site)
+    room = models.CharField(max_length=10, validators=[validate_slug])
+    # blank=False requires us to give a default
+    role = models.CharField(max_length=3, choices=ROLE_CHOICES, blank=False, default=STUDENT)
+    # year is blank iff non-student (enforced by clean method)
+    year = models.CharField(max_length=2, choices=YEAR_CHOICES, blank=True)
+
+    objects = models.Manager()
+    on_site = CurrentSiteManager('dorm')
+
+    def clean(self):
+        if self.role == Resident.STUDENT and self.year == "":
+            raise ValidationError('Students must have a year')
+        if self.role != Resident.STUDENT and self.year != "":
+            raise ValidationError('Non-students cannot have a year')
 
     @property
     def full_name(self):
