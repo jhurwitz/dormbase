@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'photologue',
     'registration',
     'autocomplete_light',
+    'guardian',
     'common',
     'desk',
     'facilities',
@@ -60,6 +61,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+# for django-guardian
+ANONYMOUS_USER_ID = -1
 
 ROOT_URLCONF = 'dormbase.urls'
 

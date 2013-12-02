@@ -6,3 +6,4 @@ feedparser
 lxml
 django-registration
 django-extensions
+django-guardian
