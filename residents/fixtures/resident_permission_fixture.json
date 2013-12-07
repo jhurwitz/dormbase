@@ -1,0 +1,10 @@
+[
+    {
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_modify_residents",
+            "name": "Can add/modify residents",
+            "content_type": ["sites", "site"]
+        }
+    }
+]

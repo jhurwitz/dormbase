@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'registration',
     'autocomplete_light',
     'guardian',
+    'south',
+    # Dormbase apps:
     'common',
     'desk',
     'facilities',
