@@ -25,6 +25,7 @@ from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from django.conf import settings
 from common.lib import ValidateOnSaveMixin
+from guardian.shortcuts import assign_perm
 
 class Resident(ValidateOnSaveMixin, models.Model):
     STUDENT     = 'STU'
@@ -100,3 +101,19 @@ class Resident(ValidateOnSaveMixin, models.Model):
 
     def __unicode__(self):
         return self.username
+
+    def assign_perm_for_dorm(self, perm):
+        """
+        Assign the user a permission that is valid *only* for their dorm/site
+        of residence. django-guardian requires that the permission be defined
+        within the same model as the object (i.e., Site), and then
+        consequently perm can be simply a permission name without the app
+        label (i.e., does not need a dot).
+        """
+        assign_perm(perm, self.user, self.dorm)
+
+    def has_perm_for_dorm(self, perm):
+        """
+        Checks if the user has the permission on their dorm/site of residence.
+        """
+        return self.user.has_perm(perm, self.dorm)
