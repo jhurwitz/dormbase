@@ -43,6 +43,8 @@ INSTALLED_APPS = (
     'autocomplete_light',
     'guardian',
     'south',
+    # "apps" for sites:
+    'dormbase',
     # Dormbase apps:
     'common',
     'desk',
@@ -120,6 +122,8 @@ TEMPLATE_DIRS = (
 # for the sites framework
 
 SITE_ID = 1
+DOMAIN_NAME = "localhost"
+DORM_NAME = "Sample Dorm"
 
 # options that each dorm ("site") can customize
 
