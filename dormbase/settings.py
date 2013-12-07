@@ -128,6 +128,9 @@ DORM_NAME = "Sample Dorm"
 # options that each dorm ("site") can customize
 
 IS_UNDERGRAD_DORM = True
+DESKWORKER_GROUP_NAME = "Deskworkers"
+HOUSETEAM_GROUP_NAME = "House Team"
+GROUPS_TO_CREATE = [DESKWORKER_GROUP_NAME, HOUSETEAM_GROUP_NAME]
 
 # execute private settings file
 
