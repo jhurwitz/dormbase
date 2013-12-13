@@ -18,6 +18,4 @@ db.dat
 dormbase/settings_private.py
 dormbase/whoosh_index
 db.sqlite3
-
-dormbase/static/less
-dormbase/media/photologue
+*/media/photologue

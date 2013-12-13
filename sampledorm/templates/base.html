@@ -32,10 +32,10 @@
             <span class="icon-bar"></span>
 	  </a>
 
-	  <a class="brand" href="{% url 'dormbase.views.home' %}">dormbase</a>
+	  <a class="brand" href="{% url 'views.home' %}">dormbase</a>
 
 	    <ul class="nav">
-	      <li {% block classHome %}{% endblock %}><a href="{% url 'dormbase.views.home' %}">Home</a></li>
+	      <li {% block classHome %}{% endblock %}><a href="{% url 'views.home' %}">Home</a></li>
 	      <li {% block classDirectory %}{% endblock %}><a href="{% url 'residents.views.directory' %}">Directory</a></li>
 	      <li {% block classPersonal %}{% endblock %}><a href="{% url 'personal.views.profile' %}">Personal</a></li>
 	      <li class="dropdown {% block classFacilities %}{% endblock %}">

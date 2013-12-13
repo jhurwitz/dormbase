@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls import patterns, include, url
+import views
 
 import autocomplete_light
 autocomplete_light.autodiscover()
@@ -28,7 +29,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Home page
-    url(r'^$', 'dormbase.views.home', name='home'),
+    url(r'^$', views.home, name='home'),
 
     # Profile/Personal
     (r'^accounts/profile/', include('personal.urls')),

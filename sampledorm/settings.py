@@ -8,10 +8,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
+# the name of the app that this settings file lives in
+SITE_APP_NAME = "sampledorm"
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+SITE_DIR = os.path.join(BASE_DIR, SITE_APP_NAME)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -43,9 +46,8 @@ INSTALLED_APPS = (
     'autocomplete_light',
     'guardian',
     'south',
-    # "apps" for sites:
-    'dormbase',
-    # Dormbase apps:
+    SITE_APP_NAME,
+    # pick which Dormbase apps you want:
     'common',
     'desk',
     'facilities',
@@ -74,9 +76,9 @@ AUTHENTICATION_BACKENDS = (
 # for django-guardian
 ANONYMOUS_USER_ID = -1
 
-ROOT_URLCONF = 'dormbase.urls'
+ROOT_URLCONF = '%s.urls' % SITE_APP_NAME
 
-WSGI_APPLICATION = 'dormbase.wsgi.application'
+WSGI_APPLICATION = '%s.wsgi.application' % SITE_APP_NAME
 
 
 # Database
@@ -110,13 +112,13 @@ ACCOUNT_ACTIVATION_DAYS = 7
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "dormbase/static"),
+    os.path.join(BASE_DIR, "static"),
 )
 
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "dormbase/templates"),
+    os.path.join(SITE_DIR, "templates"),
 )
 
 # for the sites framework
