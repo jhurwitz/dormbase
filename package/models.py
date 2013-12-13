@@ -20,16 +20,27 @@
 from django.db import models
 from django import forms
 from residents.models import Resident
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 
 class Package(models.Model):
-    recipient = models.ForeignKey(Resident, null = True)
-    location = models.CharField(max_length=8)
-    date_recieved = models.DateField(auto_now_add = True)
+    recipient = models.ForeignKey(Resident)
+    # need this separately from recipient's dorm (what if I receive a package
+    # at an old address/a previous dorm?)
+    at_dorm = models.ForeignKey(Site)
+    # notes to help the deskworker locate the package, e.g., "two boxes" or
+    # "large tube" or "on the bottom shelf"
+    notes = models.CharField(max_length=50, blank=True)
+    delivered_at = models.DateTimeField(auto_now_add=True)
+    retrieved_at = models.DateTimeField(editable=False, null=True, default=None)
+    tracking_number = models.CharField(max_length=30, blank=True)
+
+    objects = models.Manager()
+    on_site = CurrentSiteManager('at_dorm')
 
     def __unicode__(self):
-        return unicode(self.recipient)
+        return "%s, %s" % (self.recipient, self.delivered_at.date())
 
 class PackageForm(forms.ModelForm):
     class Meta:
         model = Package
-        exclude = ('date_received', )
