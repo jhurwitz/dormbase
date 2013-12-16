@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'desk',
     'deskitem',
     'facilities',
+    'guestlist',
     'laundry',
     'menus',
     'nextbus',
