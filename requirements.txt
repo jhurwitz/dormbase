@@ -7,3 +7,4 @@ lxml
 django-registration
 django-extensions
 django-guardian
+django-timedeltafield

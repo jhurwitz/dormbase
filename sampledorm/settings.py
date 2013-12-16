@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     # pick which Dormbase apps you want:
     'common',
     'desk',
+    'deskitem',
     'facilities',
     'laundry',
     'menus',
