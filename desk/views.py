@@ -19,26 +19,19 @@
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-"""
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from dormbase.package.models import PackageForm
-from dormbase.core.models import Resident
-from dormbase.personal.models import Guest
+from package.models import PackageForm
+from residents.models import Resident
+from guestlist.models import GuestlistEntry
+
 import autocomplete_light
 autocomplete_light.autodiscover()
 
-autocomplete_light.register(
-    Guest,
-    autocomplete_light.AutocompleteModelTemplate,
-    choice_template='desk/guest_choice.html',
-    search_fields=('athena', 'fullname'),
-    name="GuestSigninAutocomplete")
-
 class GuestSigninForm(forms.Form):
     guest = forms.ModelChoiceField(
-        Guest.objects.all(),
+        GuestlistEntry.objects.all(),
         widget=autocomplete_light.ChoiceWidget(
             "GuestSigninAutocomplete",
             attrs={'placeholder': 'Username or full name'}))
@@ -49,7 +42,3 @@ def dashboard(request):
                'guestForm': GuestSigninForm()}
 
     return render_to_response('desk/dashboard.html', payload, context_instance = RequestContext(request))
-"""
-
-def dashboard(request):
-    return render_to_response('desk/dashboard.html', {}, context_instance = RequestContext(request))

@@ -1,24 +1,20 @@
 <span class="div" data-value="{{ choice.pk }}">
   <div class="name">
-    {{ choice.fullname }}
-    {% if choice.athena %}
-        ({{ choice.athena }})
+    {{ choice.name }}
+    {% if choice.username %}
+        ({{ choice.username }})
     {% endif %}
   </div>
   <div class="resident">
-    Guest of {{ choice.resident.getFullName }}
+    Guest of {{ choice.guest_of.full_name }}
   </div>
-    {% if choice.date_start and choice.date_end %}
+    {% if choice.start_on and choice.end_on %}
   <div class="date">
-        {{ choice.date_start }} - {{ choice.date_end }}
+        {{ choice.start_on }} - {{ choice.end_on }}
   </div>
-    {% elif choice.date_start %}
+    {% else %}
   <div class="date">
-        Starting {{ choice.date_start }}
-  </div>
-    {% elif choice.date_end %}
-  <div class="date">
-        Until {{ choice.date_end }}
+        Starting {{ choice.start_on }}
   </div>
     {% endif %}
 </span>

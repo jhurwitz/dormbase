@@ -44,7 +44,7 @@ urlpatterns = patterns('',
     (r'^desk/', include('desk.urls')),
 
     # Packages
-    (r'package/', include('package.urls')),
+    (r'^package/', include('package.urls')),
 
     # Photologue
     (r'^photologue/', include('photologue.urls')),
@@ -72,6 +72,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'autocomplete/', include('autocomplete_light.urls')),
-                       
+    url(r'^autocomplete/', include('autocomplete_light.urls')),
 )
