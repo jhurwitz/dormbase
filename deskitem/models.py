@@ -2,7 +2,7 @@ from django.db import models
 from residents.models import Resident
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
-import datetime
+from django.utils import timezone
 import timedelta
 
 class DeskItem(models.Model):
@@ -53,7 +53,7 @@ class DeskItemLoan(models.Model):
     def end_loan(self):
         if self.returned_at is not None:
             raise ValueError("This loan has already ended")
-        self.returned_at = datetime.datetime.now()
+        self.returned_at = timezone.now()
         self.save()
 
     @classmethod

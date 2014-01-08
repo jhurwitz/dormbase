@@ -5,7 +5,7 @@ from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from common.lib import ValidateOnSaveMixin
 from django.core.exceptions import ValidationError
-import datetime
+from django.utils import timezone
 
 class GuestlistEntry(ValidateOnSaveMixin, models.Model):
     """
@@ -24,7 +24,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
 
     # save this information in case of security audits (e.g., if we need to
     # query who had access to the dorm on a given day)
-    start_on = models.DateField(default=datetime.date.today)
+    start_on = models.DateField(default=timezone.now().date)
     # this is the first day when they will *not* have access to the dorm
     end_on = models.DateField(null=True, blank=True, default=None)
     # set end_on instead of deleting rows, and then if the person is re-
@@ -44,12 +44,12 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
 
     @property
     def is_active(self):
-        return self.end_on == None or self.end_on > datetime.date.today()
+        return self.end_on == None or self.end_on > timezone.now().date()
 
     def remove(self):
         if not self.is_active:
             raise ValueError("This guestlist entry has already been removed")
-        self.end_on = datetime.date.today()
+        self.end_on = timezone.now().date()
         self.save()
 
     @classmethod
@@ -62,7 +62,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         if dorm == None:
             dorm = Site.objects.get_current()
         return cls.objects.filter(Q(for_dorm=dorm),
-            Q(end_on__isnull=True) | Q(end_on__gt=datetime.date.today()))
+            Q(end_on__isnull=True) | Q(end_on__gt=timezone.now().date()))
 
     @classmethod
     def get_active_entries_for_resident(cls, resident, dorm=None):
@@ -74,7 +74,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         if dorm == None:
             dorm = Site.objects.get_current()
         return cls.objects.filter(Q(resident=resident), Q(for_dorm=dorm),
-            Q(end_on__isnull=True) | Q(end_on__gt=datetime.date.today()))
+            Q(end_on__isnull=True) | Q(end_on__gt=timezone.now().date()))
 
     @classmethod
     def get_active_entries_for_guest(cls, user):
@@ -84,4 +84,4 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         user.username.
         """
         return cls.objects.filter(Q(username=user.username),
-            Q(end_on__isnull=True) | Q(end_on__gt=datetime.date.today()))
+            Q(end_on__isnull=True) | Q(end_on__gt=timezone.now().date()))
