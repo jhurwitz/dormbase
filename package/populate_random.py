@@ -17,29 +17,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib.auth.models import User
 from residents.models import Resident
+from package.models import Package
+from django.contrib.sites.models import Site
+from django.utils import timezone
 import random
 
-def import_test_directory():
-    f = open('residents/test_names.txt')
-    MAX_ROOM = 350
-
-    for line in f.readlines():
-        line = line.strip('\n')
-        if '(' in line:
-            continue
-        line = line.split(' ')
-        firstname, lastname = line[0], line[-1]
-        if len(firstname) < 3 or len(lastname) < 3:
-            continue
-        username = lastname[0:8].lower()
-        print username
-        u = User(first_name = firstname, last_name = lastname, username = username)
-        u.save()
-        r = Resident(user = u,
-                     room = random.randint(1, MAX_ROOM),
-                     year = random.choice([2012, 2013, 2014, 2015]))
-        r.save()
-
-        print 'Residents COMPLETE'
+def populate_random_packages():
+    residents = Resident.on_site.all()[0:random.randint(5, 15)]
+    s = Site.objects.get_current()
+    num_added = 0
+    for r in residents:
+        for i in range(random.randint(0, 5)):
+            p = Package(
+                recipient = r,
+                at_dorm = s,
+            )
+            if random.randint(0, 3) > 0:
+                p.retrieved_at = timezone.now()
+            p.save()
+            num_added += 1
+    print "Added %d packages" % num_added

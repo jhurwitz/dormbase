@@ -17,14 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from dormbase.core.populate import import_test_directory
-from dormbase.package.populate import import_test_packages
-from dormbase.movie.populate import import_test_movies
+from django.core.management.base import BaseCommand
+from residents.populate_random import populate_random_residents
+from package.populate_random import populate_random_packages
+from guestlist.populate_random import populate_random_guests
+from deskitem.populate_random import populate_random_desk_items
 
-def import_test_database():
-    import_test_directory()
-    import_test_packages()
-    import_test_movies()
-    import_test_guests()
-
-import_test_database()
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        populate_random_residents()
+        populate_random_packages()
+        populate_random_guests()
+        populate_random_desk_items()

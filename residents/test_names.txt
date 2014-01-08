@@ -1,6 +1,5 @@
 Mick Jagger
 Albert Einstein
-Alexander Graham Bell
 Arthur Ashe
 Carl Sagan
 Carol Burnett
@@ -14,13 +13,10 @@ Harrison Ford
 Helen Keller
 Henri Mancini
 Hillary Clinton
-Houdini
-Liberace
 Lucille Ball
 Magic Johnson
 Margaret Thatcher
 Michael Fox
-Mr. Rogers
 Neil Armstrong
 Oprah Winfrey
 Pamela Anderson
@@ -36,12 +32,8 @@ William Shakespeare
 Miles Davis
 Alicia Silverstone
 Bob Hope
-Cleopatra
 Louis Pasteur
 Mother Teresa
-Mozart
-Napoleon
 Newt Gingrich
 Norman Rockwell
-C. Jung
 James Dean
