@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_extensions',
     'photologue',
-    'registration',
     'autocomplete_light',
     'guardian',
     'south',
@@ -105,10 +104,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-# misc settings
-
-ACCOUNT_ACTIVATION_DAYS = 7
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

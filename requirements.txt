@@ -4,7 +4,6 @@ django-photologue
 South==0.7.6
 feedparser
 lxml
-django-registration
 django-extensions
 django-guardian
 django-timedeltafield

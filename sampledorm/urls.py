@@ -34,8 +34,8 @@ urlpatterns = patterns('',
     # Profile/Personal
     (r'^accounts/profile/', include('personal.urls')),
 
-    # Registration
-    (r'^accounts/', include('registration.backends.default.urls')),
+    # Authentication
+    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
 
     # Directory
     (r'^directory/', include('residents.urls')),
