@@ -21,10 +21,10 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import forms
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from package.models import PackageForm
 from residents.models import Resident
 from guestlist.models import GuestlistEntry
+from django.contrib.auth.decorators import login_required
 
 import autocomplete_light
 autocomplete_light.autodiscover()
@@ -36,6 +36,8 @@ class GuestSigninForm(forms.Form):
             "GuestSigninAutocomplete",
             attrs={'placeholder': 'Username or full name'}))
 
+# TODO change to @permission_required once we've define a permission
+@login_required
 def dashboard(request):
     pf = PackageForm()
     payload = {'packageForm': pf,

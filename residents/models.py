@@ -102,18 +102,22 @@ class Resident(ValidateOnSaveMixin, models.Model):
     def __unicode__(self):
         return self.username
 
-    def assign_perm_for_dorm(self, perm):
+    def assign_perm_for_dorm(self, perm, dorm=None):
         """
-        Assign the user a permission that is valid *only* for their dorm/site
-        of residence. django-guardian requires that the permission be defined
-        within the same model as the object (i.e., Site), and then
-        consequently perm can be simply a permission name without the app
-        label (i.e., does not need a dot).
+        Assign the user a permission that is valid *only* for one dorm/site.
+        django-guardian requires that the permission be defined within the
+        same model as the object (i.e., Site), and then consequently perm can
+        be simply a permission name without the app label (i.e., does not need
+        a dot).
         """
-        assign_perm(perm, self.user, self.dorm)
+        if dorm is None:
+            dorm = self.dorm
+        assign_perm(perm, self.user, dorm)
 
-    def has_perm_for_dorm(self, perm):
+    def has_perm_for_dorm(self, perm, dorm=None):
         """
-        Checks if the user has the permission on their dorm/site of residence.
+        Checks if the user has the permission for the given dorm/site.
         """
-        return self.user.has_perm(perm, self.dorm)
+        if dorm is None:
+            dorm = self.dorm
+        return self.user.has_perm(perm, dorm)

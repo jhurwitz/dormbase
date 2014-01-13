@@ -18,11 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.shortcuts import render_to_response
-from package.models import *
+from package.models import Package
 from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.contrib.auth.decorators import login_required
 
 import json
 
+# TODO change to @permission_required once we've define a permission
+@login_required
 def package_get(request):
     if request.method != 'GET':
         raise Http404
@@ -37,6 +40,8 @@ def package_get(request):
 
     return HttpResponse(json.dumps(packages), mimetype='application/json')
 
+# TODO change to @permission_required once we've define a permission
+@login_required
 def package_add(request):
     if request.method == 'POST':
         form = PackageForm(request.POST)
@@ -54,6 +59,8 @@ def package_add(request):
 
     raise Http404
 
+# TODO change to @permission_required once we've define a permission
+@login_required
 def package_remove(request):
     if request.method == 'POST':
         p_id = request.POST['package_id']

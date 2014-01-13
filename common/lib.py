@@ -1,3 +1,7 @@
+from django.contrib.sites.models import Site
+from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+
 class ValidateOnSaveMixin(object):
     """
     We are going to use validators to enforce model invariants. Models that
@@ -11,3 +15,28 @@ class ValidateOnSaveMixin(object):
         if not (force_insert or force_update):
             self.full_clean()
         super(ValidateOnSaveMixin, self).save(force_insert, force_update, **kwargs)
+
+
+def permission_required(perm):
+    """
+    Decorator for views that checks whether a user has a particular permission
+    enabled for the current site through django-guardian. If the user is
+    logged out, redirect to the login page. If the user lacks the permission,
+    return a 403 error.
+
+    This code is based on django.contrib.auth.decorators.permission_required
+    """
+
+    def check_perms(user):
+        if not user.is_authenticated():
+            return False
+        try:
+            resident = user.resident
+        except ObjectDoesNotExist:
+            # use the superclass ObjectDoesNotExist to avoid a circular import error
+            raise PermissionDenied
+        site = Site.objects.get_current()
+        if resident.has_perm_for_dorm(perm, site):
+            return True
+        raise PermissionDenied
+    return user_passes_test(check_perms)

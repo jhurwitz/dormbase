@@ -21,19 +21,18 @@ from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-
 from django.contrib.auth.models import User
-from residents.models import Resident
-
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-# from haystack.query import SearchQuerySet
+from residents.models import Resident
 
 import json
 import itertools
 
+@login_required
 def directory(request):
     return render_to_response('residents/directory.html', context_instance = RequestContext(request))
 
+@login_required
 def directory_json(request):
     searchable_fields = ['firstname', 'lastname', 'username', 'year', 'room', 'title']
     search_args = {}
@@ -50,7 +49,7 @@ def directory_json(request):
     """
     if search_results == None:
         return HttpResponse(json.dumps({'result': []}), mimetype='application/json')
-    
+
     send_result = []
     for result in search_results:
         row = { field : result.get_stored_fields()[field] for field in searchable_fields[:-1] }

@@ -73,5 +73,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
+    # TODO check if we can add permissions to this
     url(r'^autocomplete/', include('autocomplete_light.urls')),
 )
