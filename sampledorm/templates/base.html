@@ -52,13 +52,13 @@
 	      </li>
 	      <li {% block classDesk %}{% endblock %}><a href="{% url 'desk.views.dashboard' %}">Desk</a></li>
 	    </ul>
-            {% if user.username %}
+            {% if user.is_authenticated %}
                 <span class="user pull-right">
                     <span class="username">{{ user.username }}</span> | <a href="{% url 'django.contrib.auth.views.logout' %}">Log out</a>
                 </span>
             {% else %}
                 <span class="user pull-right">
-                    <a href="{% url 'django.contrib.auth.views.login' %}">Log in</a>
+                    <a href="{% url 'login' %}">Log in</a>
                 </span>
             {% endif %}
 	  </div>

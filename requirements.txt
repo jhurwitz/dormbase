@@ -7,3 +7,4 @@ lxml
 django-extensions
 django-guardian
 django-timedeltafield
+python-ldap

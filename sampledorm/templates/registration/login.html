@@ -4,10 +4,19 @@
 <div id="content-main">
     <h1>Login</h1>
 
-    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    <p>The production version of Dormbase will have login via Touchstone and/or MIT certificates. You're using the <b>testing</b> version of Dormbase which, for ease of use, has a very (unsecure) login mechanism in which you can assume any user simply by entering their username below.</p>
+
+    {% if form.errors %}
+    <p>There was an error. Please try again.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <table>
-            {{ form.as_table }}
+            <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
         </table>
 
         <input type="submit" value="Login" />

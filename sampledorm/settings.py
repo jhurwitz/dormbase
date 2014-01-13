@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'guestlist',
     'laundry',
     'menus',
+    'mitauth',
     'nextbus',
     'package',
     'personal',
@@ -67,9 +68,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mitauth.auth.CertificateRemoteUserMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
+    'mitauth.auth.CertificateRemoteUserBackend',
+    'mitauth.auth.CertificateFreeTestingBackend',
     'django.contrib.auth.backends.ModelBackend',
     'guardian.backends.ObjectPermissionBackend',
 )
@@ -80,7 +84,6 @@ ANONYMOUS_USER_ID = -1
 ROOT_URLCONF = '%s.urls' % SITE_APP_NAME
 
 WSGI_APPLICATION = '%s.wsgi.application' % SITE_APP_NAME
-
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases

@@ -35,7 +35,8 @@ urlpatterns = patterns('',
     (r'^accounts/profile/', include('personal.urls')),
 
     # Authentication
-    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    url(r'^accounts/login/$', 'mitauth.auth.scripts_login', name='login'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
 
     # Directory
     (r'^directory/', include('residents.urls')),
