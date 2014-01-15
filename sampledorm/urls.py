@@ -47,9 +47,6 @@ urlpatterns = patterns('',
     # Packages
     (r'^package/', include('package.urls')),
 
-    # Photologue
-    (r'^photologue/', include('photologue.urls')),
-
     # Nextbus
     (r'^nextbus/', include('nextbus.urls')),
 

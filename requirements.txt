@@ -1,6 +1,5 @@
 django>=1.6,<1.7
 django-autocomplete-light
-django-photologue
 South==0.7.6
 feedparser
 lxml

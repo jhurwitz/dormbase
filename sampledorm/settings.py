@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_extensions',
-    'photologue',
     'autocomplete_light',
     'guardian',
     'south',
