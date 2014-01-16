@@ -10,6 +10,9 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="{{ STATIC_URL }}js/datatableview.js"></script>
 
     <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet">
     <link href="{{ STATIC_URL }}css/token-input-facebook.css" rel="stylesheet">
@@ -36,10 +39,10 @@
 
 	    <ul class="nav">
 	      <li {% block classHome %}{% endblock %}><a href="{% url 'views.home' %}">Home</a></li>
-	      <li {% block classDirectory %}{% endblock %}><a href="{% url 'residents.views.directory' %}">Directory</a></li>
+	      <li {% block classDirectory %}{% endblock %}><a href="{% url 'directory' %}">Directory</a></li>
 	      <li {% block classPersonal %}{% endblock %}><a href="{% url 'personal.views.profile' %}">Personal</a></li>
 	      <li class="dropdown {% block classFacilities %}{% endblock %}">
-		<a class="dropdown-toggle" data-toggle="dropdown" href="">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 		  Facilities
 		  <b class="caret"></b>
 		</a>

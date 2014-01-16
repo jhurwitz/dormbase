@@ -18,8 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls import patterns, url
+from django.contrib.auth.decorators import login_required
+import views
 
 urlpatterns = patterns('residents.views',
-    url(r'^$', 'directory'),
-    url(r'^json/$', 'directory_json')
+    url(r'^$', login_required(views.ResidentDatatableView.as_view()), name='directory'),
+    url(r'^(?P<username>.*)/$', views.user_profile),
 )

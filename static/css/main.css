@@ -544,7 +544,7 @@ textarea {
   line-height: 18px;
 }
 label {
-  display: block;
+  /* display: block; */
   margin-bottom: 5px;
   color: #333333;
 }
@@ -552,11 +552,11 @@ input,
 textarea,
 select,
 .uneditable-input {
-  display: inline-block;
+  /* display: inline-block;
   width: 210px;
   height: 18px;
   padding: 4px;
-  margin-bottom: 9px;
+  margin-bottom: 9px; */
   font-size: 13px;
   line-height: 18px;
   color: #555555;
@@ -572,7 +572,7 @@ select,
 label input,
 label textarea,
 label select {
-  display: block;
+  /* display: block; */
 }
 input[type="image"],
 input[type="checkbox"],
@@ -618,7 +618,7 @@ input[type="file"] {
   line-height: 28px;
 }
 select {
-  width: 220px;
+  /* width: 220px; */
   background-color: #ffffff;
 }
 select[multiple],

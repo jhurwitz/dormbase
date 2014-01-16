@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'autocomplete_light',
     'guardian',
     'south',
+    'datatableview',
     SITE_APP_NAME,
     # pick which Dormbase apps you want:
     'common',

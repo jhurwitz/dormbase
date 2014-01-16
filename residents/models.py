@@ -20,6 +20,7 @@
 from django.db import models
 from django.core.validators import validate_slug
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
@@ -35,7 +36,7 @@ class Resident(ValidateOnSaveMixin, models.Model):
     ROLE_CHOICES = (
         (STUDENT,     'Student'),
         (HOUSEMASTER, 'Housemaster'),
-        (GRT,         'Graduate Resident Tutor'),
+        (GRT,         'GRT'),
         (AD,          'Area Director'),
     )
 
@@ -101,6 +102,9 @@ class Resident(ValidateOnSaveMixin, models.Model):
 
     def __unicode__(self):
         return self.username
+
+    def get_absolute_url(self):
+        return reverse('residents.views.user_profile', args=[self.username])
 
     def assign_perm_for_dorm(self, perm, dorm=None):
         """

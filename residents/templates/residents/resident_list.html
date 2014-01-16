@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block classDirectory %}class="active"{% endblock %}
+{% block content %}
+
+<div id="main">
+    <h1>Directory Search</h1>
+    <p>View and search through a list of all residents</p>
+
+    <div>
+        {{ datatable }}
+    </div>
+</div>
+
+{% endblock %}

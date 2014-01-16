@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block classDirectory %}class="dropdown active"{% endblock %}
+{% block content %}
+
+<h1>{{ resident.full_name }}</h1>
+
+<p />
+<p>Role: {{ resident.get_role_display }}</p>
+<p>Year: {{ resident.get_year_display }}</p>
+<p>Room: {{ resident.room }}</p>
+<p>Email: <a href="mailto:{{ resident.email }}">{{ resident.email }}</a></p>
+
+{% endblock %}
