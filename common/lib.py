@@ -40,3 +40,26 @@ def permission_required(perm):
             return True
         raise PermissionDenied
     return user_passes_test(check_perms)
+
+def resident_required(dorm=None):
+    """
+    Decorator for views that checks whether a user is a resident of the
+    specified dorm. (If no dorm is specified, use the current site.) If the
+    user is logged out, redirect to the login page. If the user lacks the
+    permission, return a 403 error.
+    """
+
+    if dorm == None:
+        dorm = Site.objects.get_current()
+    def is_resident(user):
+        if not user.is_authenticated():
+            return False
+        try:
+            resident = user.resident
+        except ObjectDoesNotExist:
+            # use the superclass ObjectDoesNotExist to avoid a circular import error
+            raise PermissionDenied
+        if resident.dorm == dorm:
+            return True
+        raise PermissionDenied
+    return user_passes_test(is_resident)

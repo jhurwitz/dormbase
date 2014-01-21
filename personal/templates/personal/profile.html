@@ -4,4 +4,14 @@
 
 <h1>Profile</h1>
 
+<h3>{{ resident.full_name }}</h3>
+
+<p />
+<p>Role: {{ resident.get_role_display }}</p>
+<p>Year: {{ resident.get_year_display }}</p>
+<p>Room: {{ resident.room }}</p>
+<p>Email: <a href="mailto:{{ resident.email }}">{{ resident.email }}</a></p>
+
+{# Right now this duplicates user_profile.html, but in the future we may add editable fields like "bio" #}
+
 {% endblock %}
