@@ -4,4 +4,20 @@
 
 <h1>Packages</h1>
 
+<div>You have {{ packages.count }} package{{ packages.count|pluralize }} at desk.</div>
+
+<ul>
+{% for p in packages %}
+    <li>
+        {{ p.delivered_at.date }}
+        {% if p.tracking_number != "" %}
+            ({{ p.tracking_number }})
+        {% endif %}
+        {% if not p.at_recipients_dorm %}
+            <em>located at {{ p.at_dorm.name }} desk</em>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
 {% endblock %}

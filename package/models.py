@@ -41,6 +41,10 @@ class Package(models.Model):
     def __unicode__(self):
         return "%s, %s" % (self.recipient, self.delivered_at.date())
 
+    @property
+    def at_recipients_dorm(self):
+        return self.at_dorm == self.recipient.dorm
+
 class PackageForm(forms.ModelForm):
     class Meta:
         model = Package
