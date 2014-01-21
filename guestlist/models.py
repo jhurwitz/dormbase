@@ -6,6 +6,8 @@ from django.contrib.sites.managers import CurrentSiteManager
 from common.lib import ValidateOnSaveMixin
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django import forms
+from django.core.validators import validate_slug
 
 class GuestlistEntry(ValidateOnSaveMixin, models.Model):
     """
@@ -17,17 +19,17 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
     for_dorm = models.ForeignKey(Site)
 
     name = models.CharField(max_length=30)
-    is_mit_student = models.BooleanField()
+    is_mit_student = models.BooleanField(verbose_name='MIT student?')
     # this is a string username and not a User ForeignKey because it might be
     # an MIT student who doesn't have a Dormbase account yet
-    username = models.CharField(max_length=10, blank=True)
+    username = models.CharField(max_length=10, blank=True, validators=[validate_slug])
 
     # save this information in case of security audits (e.g., if we need to
     # query who had access to the dorm on a given day)
-    start_on = models.DateField(default=timezone.now().date)
+    starts_on = models.DateField(default=timezone.now().date)
     # this is the first day when they will *not* have access to the dorm
-    end_on = models.DateField(null=True, blank=True, default=None)
-    # set end_on instead of deleting rows, and then if the person is re-
+    expires_on = models.DateField(null=True, blank=True, default=None)
+    # set expires_on instead of deleting rows, and then if the person is re-
     # added, add a new row at that time
 
     objects = models.Manager()
@@ -44,12 +46,12 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
 
     @property
     def is_active(self):
-        return self.end_on == None or self.end_on > timezone.now().date()
+        return self.expires_on == None or self.expires_on > timezone.now().date()
 
     def remove(self):
         if not self.is_active:
             raise ValueError("This guestlist entry has already been removed")
-        self.end_on = timezone.now().date()
+        self.expires_on = timezone.now().date()
         self.save()
 
     @classmethod
@@ -62,7 +64,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         if dorm == None:
             dorm = Site.objects.get_current()
         return cls.objects.filter(Q(for_dorm=dorm),
-            Q(end_on__isnull=True) | Q(end_on__gt=timezone.now().date()))
+            Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date()))
 
     @classmethod
     def get_active_entries_for_resident(cls, resident, dorm=None):
@@ -73,8 +75,8 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         """
         if dorm == None:
             dorm = Site.objects.get_current()
-        return cls.objects.filter(Q(resident=resident), Q(for_dorm=dorm),
-            Q(end_on__isnull=True) | Q(end_on__gt=timezone.now().date()))
+        return cls.objects.filter(Q(guest_of=resident), Q(for_dorm=dorm),
+            Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date()))
 
     @classmethod
     def get_active_entries_for_guest(cls, user):
@@ -84,4 +86,14 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         user.username.
         """
         return cls.objects.filter(Q(username=user.username),
-            Q(end_on__isnull=True) | Q(end_on__gt=timezone.now().date()))
+            Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date()))
+
+class GuestlistEntryForm(forms.ModelForm):
+    class Meta:
+        model = GuestlistEntry
+        fields = ['name', 'is_mit_student', 'username', 'starts_on', 'expires_on']
+        error_messages = {
+            'username': {
+                'invalid': "Enter just the username (the part before @mit.edu)",
+            },
+        }

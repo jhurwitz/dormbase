@@ -8,13 +8,13 @@
   <div class="resident">
     Guest of {{ choice.guest_of.full_name }}
   </div>
-    {% if choice.start_on and choice.end_on %}
+    {% if choice.starts_on and choice.expires_on %}
   <div class="date">
-        {{ choice.start_on }} - {{ choice.end_on }}
+        {{ choice.starts_on }} - {{ choice.expires_on }}
   </div>
     {% else %}
   <div class="date">
-        Starting {{ choice.start_on }}
+        Starting {{ choice.starts_on }}
   </div>
     {% endif %}
 </span>

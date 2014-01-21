@@ -4,4 +4,23 @@
 
 <h1>Guest List</h1>
 
+<div>You have {{ guests.count }} guest{{ guests.count|pluralize }} on your guest list. [<a href="{% url 'personal.views.guestlist_add' %}"><i class="icon-plus"></i> add more</a>]</div>
+
+<ul>
+{% for g in guests %}
+    <li>
+        {{ g.name }}
+        {% if g.starts_on > today %}
+            <small>starting {{ g.starts_on }}</small>
+        {% endif %}
+        {% if g.expires_on != None %}
+            <small>expires on {{ g.expires_on }}</small>
+        {% endif %}
+        <a href="{% url 'personal.views.guestlistentry_delete' g.id %}">
+            <i class="icon-remove"></i>
+        </a>
+    </li>
+{% endfor %}
+</ul>
+
 {% endblock %}

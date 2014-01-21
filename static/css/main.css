@@ -470,7 +470,7 @@ address {
   font-style: normal;
 }
 small {
-  font-size: 100%;
+  /* font-size: 100%; */
 }
 cite {
   font-style: normal;

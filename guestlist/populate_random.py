@@ -21,12 +21,15 @@ from residents.models import Resident
 from guestlist.models import GuestlistEntry
 from django.contrib.sites.models import Site
 import random
+from django.utils import timezone
+from datetime import timedelta
 
 def populate_random_guests():
     s = Site.objects.get_current()
     f = open('residents/test_names.txt')
     names = [n.strip().split() for n in f.readlines()]
     residents = Resident.on_site.all()[0:random.randint(5, 15)]
+    today = timezone.now().date()
     num_added = 0
     for r in residents:
         for i in range(5):
@@ -41,6 +44,10 @@ def populate_random_guests():
                 is_mit_student = MIT,
                 username = username,
             )
+            if random.randint(0, 4) == 0:
+                g.starts_on = today + timedelta(random.randint(1,10))
+            if random.randint(0, 4) == 0:
+                g.expires_on = today + timedelta(random.randint(-10,10))
             num_added += 1
             g.save()
     print "Added %d guest list entries" % num_added

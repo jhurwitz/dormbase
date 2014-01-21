@@ -16,8 +16,8 @@ class Migration(SchemaMigration):
             ('name', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('is_mit_student', self.gf('django.db.models.fields.BooleanField')()),
             ('username', self.gf('django.db.models.fields.CharField')(max_length=10, blank=True)),
-            ('start_on', self.gf('django.db.models.fields.DateField')(default=datetime.date.today)),
-            ('end_on', self.gf('django.db.models.fields.DateField')(default=None, null=True, blank=True)),
+            ('starts_on', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2014, 1, 28, 0, 0))),
+            ('expires_on', self.gf('django.db.models.fields.DateField')(default=None, null=True, blank=True)),
         ))
         db.send_create_signal(u'guestlist', ['GuestlistEntry'])
 
@@ -66,13 +66,13 @@ class Migration(SchemaMigration):
         },
         u'guestlist.guestlistentry': {
             'Meta': {'object_name': 'GuestlistEntry'},
-            'end_on': ('django.db.models.fields.DateField', [], {'default': 'None', 'null': 'True', 'blank': 'True'}),
+            'expires_on': ('django.db.models.fields.DateField', [], {'default': 'None', 'null': 'True', 'blank': 'True'}),
             'for_dorm': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
             'guest_of': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['residents.Resident']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_mit_student': ('django.db.models.fields.BooleanField', [], {}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'start_on': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
+            'starts_on': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2014, 1, 28, 0, 0)'}),
             'username': ('django.db.models.fields.CharField', [], {'max_length': '10', 'blank': 'True'})
         },
         u'residents.resident': {

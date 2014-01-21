@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <form method="POST" action="." >
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="hidden" name="guest_of" value="{{ guest_of_id }} " />
+    <input type="submit" value="Create" />
+  </form>
+
+  <a href="{{ prev_url }}">Take me back</a>
+
+<script type="text/javascript">
+$("#id_is_mit_student").change(function(e){
+    if ($("#id_is_mit_student").is(":checked")) {
+        $("#id_username").prop('disabled', false);
+    } else {
+        $("#id_username").val('');
+        $("#id_username").prop('disabled', true);
+    }
+});
+</script>
+
+{% endblock %}

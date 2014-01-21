@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <form method="POST" action="." >
+    {% csrf_token %}
+    <p>Are you sure you want to remove {{ guestlistentry.name }} from your guest list?</p>
+    <input type="submit" value="Yes" />
+  </form>
+  <a href="{{ prev_url }}">No, take me back</a>
+
+{% endblock %}
