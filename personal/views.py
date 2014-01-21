@@ -23,7 +23,15 @@ def dashboard(request):
     except Resident.DoesNotExist:
         return render_to_response('personal/non_resident.html', context_instance=RequestContext(request))
 
-    payload = {'resident': request.user.resident}
+    num_packages = packages = Package.objects.filter(recipient=resident, retrieved_at=None).count()
+    size_guestlist = GuestlistEntry.get_active_entries_for_resident(resident).count()
+    num_active_loans = DeskItemLoan.get_active_loans_for_resident(resident).count()
+    payload = {
+        'resident': request.user.resident,
+        'num_packages': num_packages,
+        'size_guestlist': size_guestlist,
+        'num_active_loans': num_active_loans,
+    }
     return render_to_response('personal/dashboard.html', payload, context_instance=RequestContext(request))
 
 @resident_required()

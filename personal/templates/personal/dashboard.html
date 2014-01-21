@@ -4,4 +4,14 @@
 
 <h1>Dashboard</h1>
 
+<p>Welcome, {{ resident.user.first_name }}!</p>
+
+<p>You have {{ num_packages }} package{{ num_packages|pluralize }} at desk.</p>
+
+<p>You are currently borrowing {{ num_active_loans }} item{{ num_active_loans|pluralize }} from desk.</p>
+
+<p>You have {{ size_guestlist }} guest{{ size_guestlist|pluralize }} on your guest list.</p>
+
+<p>Use the links above to navigate through Dormbase.</p>
+
 {% endblock %}
