@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block classPersonal %}class="dropdown active"{% endblock %}
+{% block content %}
+
+<div >
+  <ul class="nav nav-tabs">
+    <li {% block classDashboard %}{% endblock %}>
+      <a href="{% url 'personal.views.dashboard' %}">Dashboard</a>
+    </li>
+    <li {% block classProfile %}{% endblock %}>
+      <a href="{% url 'personal.views.profile' %}">Profile</a>
+    </li>
+    <li {% block classPackages %}{% endblock %}>
+      <a href="{% url 'personal.views.packages' %}">Packages</a>
+    </li>
+    <li {% block classGuestlist %}{% endblock %}>
+      <a href="{% url 'personal.views.guestlist' %}">Guest List</a>
+    </li>
+    <li {% block classLoans %}{% endblock %}>
+      <a href="{% url 'personal.views.loans' %}">Desk Loans</a>
+    </li>
+  </ul>
+
+  {% block subcontent %}
+  {% endblock %}
+</div>
+
+{% endblock %}

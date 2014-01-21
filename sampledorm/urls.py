@@ -31,15 +31,15 @@ urlpatterns = patterns('',
     # Home page
     url(r'^$', views.home, name='home'),
 
-    # Profile/Personal
-    (r'^accounts/profile/', include('personal.urls')),
-
     # Authentication
     url(r'^accounts/login/$', 'mitauth.auth.scripts_login', name='login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
 
     # Directory
     (r'^directory/', include('residents.urls')),
+
+    # Personal
+    (r'^personal/', include('personal.urls')),
 
     # Desk
     (r'^desk/', include('desk.urls')),

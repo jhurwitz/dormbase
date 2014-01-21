@@ -137,6 +137,8 @@ DESKWORKER_GROUP_NAME = "Deskworkers"
 HOUSETEAM_GROUP_NAME = "House Team"
 GROUPS_TO_CREATE = [DESKWORKER_GROUP_NAME, HOUSETEAM_GROUP_NAME]
 
+LOGIN_REDIRECT_URL = '/personal/'
+
 # execute private settings file
 
 if os.path.exists("settings_private.py"):
