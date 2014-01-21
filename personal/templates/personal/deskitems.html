@@ -1,0 +1,28 @@
+{% extends "personal/base.html" %}
+{% block classDeskitems %}class="active"{% endblock %}
+{% block subcontent %}
+
+<h1>Desk Items</h1>
+
+<h3>My items</h3>
+
+<div>You are currently borrowing {{ active_loans.count }} item{{ active_loans.count|pluralize }} from desk.</div>
+
+<ul>
+{% for l in active_loans %}
+    <li>
+    {{ l.desk_item.name }}
+    {% if l.due_by != None %}
+        (due in {{ l.due_by|timeuntil }})
+    {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<h3>All items</h3>
+
+<div>Desk has many items availabile for you to borrow:</div>
+
+{{ datatable }}
+
+{% endblock %}

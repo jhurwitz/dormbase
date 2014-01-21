@@ -7,11 +7,14 @@ from residents.models import Resident
 from django.contrib.sites.models import Site
 from package.models import Package
 from guestlist.models import GuestlistEntry, GuestlistEntryForm
+from deskitem.models import DeskItem, DeskItemLoan
 from django.http import Http404
 from common.lib import resident_required
 from django.views.generic import DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
+from datatableview.views import DatatableView
+from datatableview import helpers
 
 @login_required
 def dashboard(request):
@@ -85,6 +88,31 @@ class GuestlistEntryDeleteView(DeleteView):
         self.object.remove()
         return HttpResponseRedirect(success_url)
 
-@resident_required()
-def loans(request):
-    return render_to_response('personal/loans.html', context_instance=RequestContext(request))
+def make_boolean_checkmark_nofalse(value, *args, **kwargs):
+    """
+    Hack because I couldn't get this to work the right way
+    """
+    return helpers.make_boolean_checkmark(value, true_value="&#10004;", false_value="", *args, **kwargs)
+
+# resident_required() via urls.py
+class DeskItemDatatableView(DatatableView):
+    model = DeskItem
+    template_name = "personal/deskitems.html"
+    datatable_options = {
+        'columns': [
+            'name',
+            'description',
+            'max_loan_duration',
+            ('At desk', 'at_desk', make_boolean_checkmark_nofalse),
+        ]
+    }
+
+    def get_queryset(self):
+        return DeskItem.on_site.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(DeskItemDatatableView, self).get_context_data(**kwargs)
+        resident = self.request.user.resident
+        active_loans = DeskItemLoan.get_active_loans_for_resident(resident).order_by('loaned_at')
+        context['active_loans'] = active_loans
+        return context
