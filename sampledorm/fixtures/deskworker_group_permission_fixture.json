@@ -1,0 +1,47 @@
+[
+    {
+        "model": "guardian.groupobjectpermission",
+        "fields": {
+            "permission": 100,
+            "object_pk": 1,
+            "group": ["Sample Dorm Deskworkers"],
+            "content_type": ["sites", "site"]
+        }
+    },
+    {
+        "model": "guardian.groupobjectpermission",
+        "fields": {
+            "permission": 102,
+            "object_pk": 1,
+            "group": ["Sample Dorm Deskworkers"],
+            "content_type": ["sites", "site"]
+        }
+    },
+    {
+        "model": "guardian.groupobjectpermission",
+        "fields": {
+            "permission": 103,
+            "object_pk": 1,
+            "group": ["Sample Dorm Deskworkers"],
+            "content_type": ["sites", "site"]
+        }
+    },
+    {
+        "model": "guardian.groupobjectpermission",
+        "fields": {
+            "permission": 104,
+            "object_pk": 1,
+            "group": ["Sample Dorm Deskworkers"],
+            "content_type": ["sites", "site"]
+        }
+    },
+    {
+        "model": "guardian.groupobjectpermission",
+        "fields": {
+            "permission": 105,
+            "object_pk": 1,
+            "group": ["Sample Dorm Deskworkers"],
+            "content_type": ["sites", "site"]
+        }
+    }
+]
