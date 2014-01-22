@@ -1,5 +1,6 @@
 [
     {
+        "pk": 106,
         "model": "auth.permission",
         "fields": {
             "codename": "can_modify_residents",

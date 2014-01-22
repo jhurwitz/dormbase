@@ -117,3 +117,6 @@ class GuestlistEntryForm(forms.ModelForm):
                 'invalid': "Enter just the username (the part before @mit.edu)",
             },
         }
+
+# if you change these, make sure to update the fixtures!
+CAN_VIEW_GUESTLISTS_PERMISSION = "can_view_guestlists"

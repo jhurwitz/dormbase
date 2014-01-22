@@ -1,0 +1,11 @@
+[
+    {
+        "pk": 104,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_guestlists",
+            "name": "Can view the guest lists of all dorm residents",
+            "content_type": ["sites", "site"]
+        }
+    }
+]

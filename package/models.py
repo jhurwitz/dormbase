@@ -48,3 +48,6 @@ class Package(models.Model):
 class PackageForm(forms.ModelForm):
     class Meta:
         model = Package
+
+# if you change these, make sure to update the fixtures!
+CAN_MANAGE_PACKAGES_PERMISSION = "can_manage_packages"

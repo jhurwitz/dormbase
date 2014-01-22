@@ -1,0 +1,20 @@
+[
+    {
+        "pk": 100,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_desk_site",
+            "name": "Can view the desk portion of the website",
+            "content_type": ["sites", "site"]
+        }
+    },
+    {
+        "pk": 101,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_add_deskworkers",
+            "name": "Can add residents to the deskworker permission-granting group",
+            "content_type": ["sites", "site"]
+        }
+    }
+]

@@ -132,3 +132,6 @@ def check_if_dorm_changed(sender, instance, created, raw, *args, **kwargs):
         GuestlistEntry.remove_all_active_entries_for_resident_outside_dorm(instance)
 
 post_save.connect(check_if_dorm_changed, sender=Resident)
+
+# if you change these, make sure to update the fixtures!
+CAN_MODIFY_RESIDENTS_PERMISSION = "can_modify_residents"

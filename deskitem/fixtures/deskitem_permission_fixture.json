@@ -1,0 +1,20 @@
+[
+    {
+        "pk": 102,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_add_deskitems",
+            "name": "Can add/modify desk items",
+            "content_type": ["sites", "site"]
+        }
+    },
+    {
+        "pk": 103,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_loan_deskitems",
+            "name": "Can loan desk items to residents",
+            "content_type": ["sites", "site"]
+        }
+    }
+]

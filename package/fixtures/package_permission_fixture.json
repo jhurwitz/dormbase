@@ -1,0 +1,11 @@
+[
+    {
+        "pk": 105,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_manage_packages",
+            "name": "Can add/modify packages for all dorm residents",
+            "content_type": ["sites", "site"]
+        }
+    }
+]

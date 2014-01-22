@@ -59,3 +59,7 @@ class DeskItemLoan(models.Model):
     @classmethod
     def get_active_loans_for_resident(cls, resident):
         return cls.objects.filter(resident=resident, returned_at=None)
+
+# if you change these, make sure to update the fixtures!
+CAN_ADD_DESKITEMS_PERMISSION = "can_add_deskitems"
+CAN_LOAN_DESKITEMS_PERMISSION = "can_loan_deskitems"
