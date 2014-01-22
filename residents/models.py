@@ -27,6 +27,7 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.conf import settings
 from common.lib import ValidateOnSaveMixin
 from guardian.shortcuts import assign_perm
+from django.db.models.signals import post_save
 
 class Resident(ValidateOnSaveMixin, models.Model):
     STUDENT     = 'STU'
@@ -125,3 +126,9 @@ class Resident(ValidateOnSaveMixin, models.Model):
         if dorm is None:
             dorm = self.dorm
         return self.user.has_perm(perm, dorm)
+
+def check_if_dorm_changed(sender, instance, created, raw, *args, **kwargs):
+    if not (created or raw):
+        GuestlistEntry.remove_all_active_entries_for_resident_outside_dorm(instance)
+
+post_save.connect(check_if_dorm_changed, sender=Resident)

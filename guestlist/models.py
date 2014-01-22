@@ -79,6 +79,26 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
             Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date()))
 
     @classmethod
+    def remove_all_active_entries_for_resident_outside_dorm(cls, resident, dorm=None):
+        """
+        Find all active guestlist entries for resident in dorms that are *not*
+        the one passed as a parameter, and then call remove on each of them.
+        Call this method after a resident switches dorms to invalidate their
+        previous guestlist entries.
+
+        If dorm=None, it defaults to the resident's *current dorm* (different
+        from other methods in this class).
+        """
+        if dorm == None:
+            dorm = resident.dorm
+        entries = cls.objects.filter(
+            Q(guest_of=resident),
+            Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date())
+        ).exclude(for_dorm=dorm)
+        for entry in entries:
+            entry.remove()
+
+    @classmethod
     def get_active_entries_for_guest(cls, user):
         """
         Return the dorms that user can enter. This is the set of active
