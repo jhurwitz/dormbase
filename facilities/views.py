@@ -19,15 +19,8 @@
 
 from django.conf import settings
 from django.shortcuts import redirect
-        
+
 def report(request):
-    # Base URL
-    url = 'https://insidemit-apps.mit.edu/apps/building_services/CreateResidRepairOrder.action?sapSystemId=PS1'
-    
-    # Auto-Fill Building Number
-    if hasattr(settings, 'BUILDING'):
-        url += '&pageInfo.bldg1=' + settings.BUILDING + '&pageInfo.contactInfo.bldg=' + settings.BUILDING
-    
-    # TODO: fill in user's room, phone number, check if they actually live here
-    
+    url = 'https://adminapps.mit.edu/apps/facilities/SelectRepairLocation.action'
+    # TODO see if there's a way to pre-fill building number like there used to be
     return redirect(url)
