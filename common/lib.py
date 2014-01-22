@@ -24,6 +24,8 @@ def permission_required(perm):
     logged out, redirect to the login page. If the user lacks the permission,
     return a 403 error.
 
+    If a list of permissions is passed, then a user needs at least one to pass.
+
     This code is based on django.contrib.auth.decorators.permission_required
     """
 
@@ -36,8 +38,13 @@ def permission_required(perm):
             # use the superclass ObjectDoesNotExist to avoid a circular import error
             raise PermissionDenied
         site = Site.objects.get_current()
-        if resident.has_perm_for_dorm(perm, site):
-            return True
+        if isinstance(perm, list):
+            perms = perm
+        else:
+            perms = [perm]
+        for p in perms:
+            if resident.has_perm_for_dorm(p, site):
+                return True
         raise PermissionDenied
     return user_passes_test(check_perms)
 

@@ -28,6 +28,7 @@ from django.conf import settings
 from common.lib import ValidateOnSaveMixin
 from guardian.shortcuts import assign_perm
 from django.db.models.signals import post_save
+from desk.models import CAN_VIEW_DESK_SITE_PERMISSION
 
 class Resident(ValidateOnSaveMixin, models.Model):
     STUDENT     = 'STU'
@@ -116,7 +117,7 @@ class Resident(ValidateOnSaveMixin, models.Model):
         a dot).
         """
         if dorm is None:
-            dorm = self.dorm
+            dorm = Site.objects.get_current()
         assign_perm(perm, self.user, dorm)
 
     def has_perm_for_dorm(self, perm, dorm=None):
@@ -124,8 +125,11 @@ class Resident(ValidateOnSaveMixin, models.Model):
         Checks if the user has the permission for the given dorm/site.
         """
         if dorm is None:
-            dorm = self.dorm
+            dorm = Site.objects.get_current()
         return self.user.has_perm(perm, dorm)
+
+    def can_view_desk_site(self):
+        return self.has_perm_for_dorm(CAN_VIEW_DESK_SITE_PERMISSION)
 
 def check_if_dorm_changed(sender, instance, created, raw, *args, **kwargs):
     if not (created or raw):

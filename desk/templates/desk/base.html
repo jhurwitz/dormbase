@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block classDesk %}class="dropdown active"{% endblock %}
+{% block content %}
+
+<div >
+  <ul class="nav nav-tabs">
+    <li {% block classDashboard %}{% endblock %}>
+      <a href="{% url 'desk.views.dashboard' %}">Dashboard</a>
+    </li>
+    <li {% block classPackages %}{% endblock %}>
+      <a href="{% url 'desk.views.packages' %}">Packages</a>
+    </li>
+    <li {% block classGuestlists %}{% endblock %}>
+      <a href="{% url 'desk.views.guestlists' %}">Guest Lists</a>
+    </li>
+    <li {% block classDeskitems %}{% endblock %}>
+      <a href="{% url 'desk.views.deskitems' %}">Desk Items</a>
+    </li>
+  </ul>
+
+  {% block subcontent %}
+  {% endblock %}
+</div>
+
+{% endblock %}

@@ -18,7 +18,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls import patterns, url
+import views
 
 urlpatterns = patterns('desk.views',
-    url(r'^$', 'dashboard')
+    url(r'^$', views.dashboard),
+    url(r'^packages/$', views.packages),
+    url(r'^guestlists/$', views.guestlists),
+    url(r'^deskitems/$', views.deskitems),
 )

@@ -21,26 +21,29 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import forms
 from django.contrib import auth
-from package.models import PackageForm
+from package.models import CAN_MANAGE_PACKAGES_PERMISSION
 from residents.models import Resident
-from guestlist.models import GuestlistEntry
-from django.contrib.auth.decorators import login_required
+from guestlist.models import GuestlistEntry, CAN_VIEW_GUESTLISTS_PERMISSION
+from deskitem.models import CAN_ADD_DESKITEMS_PERMISSION, CAN_LOAN_DESKITEMS_PERMISSION
+from common.lib import permission_required
+from models import CAN_VIEW_DESK_SITE_PERMISSION
 
-import autocomplete_light
-autocomplete_light.autodiscover()
-
-class GuestSigninForm(forms.Form):
-    guest = forms.ModelChoiceField(
-        GuestlistEntry.objects.all(),
-        widget=autocomplete_light.ChoiceWidget(
-            "GuestSigninAutocomplete",
-            attrs={'placeholder': 'Username or full name'}))
-
-# TODO change to @permission_required once we've define a permission
-@login_required
+@permission_required(CAN_VIEW_DESK_SITE_PERMISSION)
 def dashboard(request):
-    pf = PackageForm()
-    payload = {'packageForm': pf,
-               'guestForm': GuestSigninForm()}
+    payload = {}
+    return render_to_response('desk/dashboard.html', payload, context_instance=RequestContext(request))
 
-    return render_to_response('desk/dashboard.html', payload, context_instance = RequestContext(request))
+@permission_required(CAN_MANAGE_PACKAGES_PERMISSION)
+def packages(request):
+    payload = {}
+    return render_to_response('desk/packages.html', payload, context_instance=RequestContext(request))
+
+@permission_required(CAN_VIEW_GUESTLISTS_PERMISSION)
+def guestlists(request):
+    payload = {}
+    return render_to_response('desk/guestlists.html', payload, context_instance=RequestContext(request))
+
+@permission_required([CAN_ADD_DESKITEMS_PERMISSION, CAN_LOAN_DESKITEMS_PERMISSION])
+def deskitems(request):
+    payload = {}
+    return render_to_response('desk/deskitems.html', payload, context_instance=RequestContext(request))
