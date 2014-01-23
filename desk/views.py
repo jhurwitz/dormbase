@@ -23,10 +23,12 @@ from django import forms
 from django.contrib import auth
 from package.models import CAN_MANAGE_PACKAGES_PERMISSION
 from residents.models import Resident
-from guestlist.models import GuestlistEntry, CAN_VIEW_GUESTLISTS_PERMISSION
 from deskitem.models import CAN_ADD_DESKITEMS_PERMISSION, CAN_LOAN_DESKITEMS_PERMISSION
-from common.lib import permission_required
+from guestlist.models import GuestlistEntry
+from common.lib import permission_required, make_boolean_checkmark_nofalse
 from models import CAN_VIEW_DESK_SITE_PERMISSION
+from datatableview.views import DatatableView
+from datatableview import helpers
 
 @permission_required(CAN_VIEW_DESK_SITE_PERMISSION)
 def dashboard(request):
@@ -38,10 +40,27 @@ def packages(request):
     payload = {}
     return render_to_response('desk/packages.html', payload, context_instance=RequestContext(request))
 
-@permission_required(CAN_VIEW_GUESTLISTS_PERMISSION)
-def guestlists(request):
-    payload = {}
-    return render_to_response('desk/guestlists.html', payload, context_instance=RequestContext(request))
+# permission_required() via urls.py
+class GuestlistDatatableView(DatatableView):
+    # TODO we may want to have deskworkers log every time a guest enters the dorm
+    model = GuestlistEntry
+    template_name = "desk/guestlists.html"
+    datatable_options = {
+        'columns': [
+            'name',
+            ('MIT student?', 'is_mit_student', make_boolean_checkmark_nofalse),
+            ('Guest of', 'guest_of', 'format_residents_name'),
+            'starts_on',
+            'expires_on'
+        ],
+        'search_fields': ['guest_of__user__first_name', 'guest_of__user__last_name']
+    }
+
+    def format_residents_name(self, instance, *args, **kwargs):
+        return instance.guest_of.full_name
+
+    def get_queryset(self):
+        return GuestlistEntry.get_active_entries_for_dorm().order_by('name')
 
 @permission_required([CAN_ADD_DESKITEMS_PERMISSION, CAN_LOAN_DESKITEMS_PERMISSION])
 def deskitems(request):

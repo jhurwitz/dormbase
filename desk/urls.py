@@ -18,11 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls import patterns, url
+from guestlist.models import CAN_VIEW_GUESTLISTS_PERMISSION
+from common.lib import permission_required
 import views
 
 urlpatterns = patterns('desk.views',
     url(r'^$', views.dashboard),
     url(r'^packages/$', views.packages),
-    url(r'^guestlists/$', views.guestlists),
+    url(r'^guestlists/$', permission_required(CAN_VIEW_GUESTLISTS_PERMISSION)(views.GuestlistDatatableView.as_view()), name='desk.views.guestlists'),
     url(r'^deskitems/$', views.deskitems),
 )

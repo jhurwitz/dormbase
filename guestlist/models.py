@@ -46,7 +46,8 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
 
     @property
     def is_active(self):
-        return self.expires_on == None or self.expires_on > timezone.now().date()
+        return self.starts_on <= timezone.now().date() and \
+            (self.expires_on == None or self.expires_on > timezone.now().date())
 
     def remove(self):
         if not self.is_active:
@@ -64,6 +65,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         if dorm == None:
             dorm = Site.objects.get_current()
         return cls.objects.filter(Q(for_dorm=dorm),
+            Q(starts_on__lte=timezone.now().date()),
             Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date()))
 
     @classmethod
@@ -76,6 +78,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         if dorm == None:
             dorm = Site.objects.get_current()
         return cls.objects.filter(Q(guest_of=resident), Q(for_dorm=dorm),
+            Q(starts_on__lte=timezone.now().date()),
             Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date()))
 
     @classmethod
@@ -93,6 +96,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
             dorm = resident.dorm
         entries = cls.objects.filter(
             Q(guest_of=resident),
+            Q(starts_on__lte=timezone.now().date()),
             Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date())
         ).exclude(for_dorm=dorm)
         for entry in entries:
@@ -106,6 +110,7 @@ class GuestlistEntry(ValidateOnSaveMixin, models.Model):
         user.username.
         """
         return cls.objects.filter(Q(username=user.username),
+            Q(starts_on__lte=timezone.now().date()),
             Q(expires_on__isnull=True) | Q(expires_on__gt=timezone.now().date()))
 
 class GuestlistEntryForm(forms.ModelForm):

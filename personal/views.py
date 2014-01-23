@@ -9,7 +9,7 @@ from package.models import Package
 from guestlist.models import GuestlistEntry, GuestlistEntryForm
 from deskitem.models import DeskItem, DeskItemLoan
 from django.http import Http404
-from common.lib import resident_required
+from common.lib import resident_required, make_boolean_checkmark_nofalse
 from django.views.generic import DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
@@ -95,12 +95,6 @@ class GuestlistEntryDeleteView(DeleteView):
         # call remove() instead of deleting
         self.object.remove()
         return HttpResponseRedirect(success_url)
-
-def make_boolean_checkmark_nofalse(value, *args, **kwargs):
-    """
-    Hack because I couldn't get this to work the right way
-    """
-    return helpers.make_boolean_checkmark(value, true_value="&#10004;", false_value="", *args, **kwargs)
 
 # resident_required() via urls.py
 class DeskItemDatatableView(DatatableView):

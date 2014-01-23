@@ -1,6 +1,7 @@
 from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from datatableview import helpers
 
 class ValidateOnSaveMixin(object):
     """
@@ -70,3 +71,9 @@ def resident_required(dorm=None):
             return True
         raise PermissionDenied
     return user_passes_test(is_resident)
+
+def make_boolean_checkmark_nofalse(value, *args, **kwargs):
+    """
+    Hack because I couldn't get this to work the right way
+    """
+    return helpers.make_boolean_checkmark(value, true_value="&#10004;", false_value="", *args, **kwargs)
