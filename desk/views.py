@@ -20,25 +20,65 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django import forms
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib import auth
-from package.models import CAN_MANAGE_PACKAGES_PERMISSION
+from django.db.models import Q
+from package.models import Package, CAN_MANAGE_PACKAGES_PERMISSION
 from residents.models import Resident
 from deskitem.models import CAN_ADD_DESKITEMS_PERMISSION, CAN_LOAN_DESKITEMS_PERMISSION
 from guestlist.models import GuestlistEntry
 from common.lib import permission_required, make_boolean_checkmark_nofalse
 from models import CAN_VIEW_DESK_SITE_PERMISSION
-from datatableview.views import DatatableView
+from datatableview.views import DatatableView, XEditableDatatableView
 from datatableview import helpers
+from datetime import timedelta
+from django.utils import timezone
 
 @permission_required(CAN_VIEW_DESK_SITE_PERMISSION)
 def dashboard(request):
     payload = {}
     return render_to_response('desk/dashboard.html', payload, context_instance=RequestContext(request))
 
+# permission_required() via urls.py
+class PackageDatatableView(XEditableDatatableView):
+    model = Package
+    template_name = "desk/packages.html"
+    datatable_options = {
+        'columns': [
+            ('Recipient', 'recipient', 'format_residents_name'),
+            ('Notes', 'notes', helpers.make_xeditable),
+            ('Delivered', 'delivered_at', 'format_delivered_at'),
+            ('At desk?', 'retrieved_at', 'format_retrieved_at'),
+            'tracking_number',
+        ],
+        'search_fields': ['recipient__user__first_name', 'recipient__user__last_name']
+    }
+
+    def format_residents_name(self, instance, *args, **kwargs):
+        return instance.recipient.full_name
+
+    def format_delivered_at(self, instance, *args, **kwargs):
+        return instance.delivered_at.date()
+
+    def format_retrieved_at(self, instance, *args, **kwargs):
+        if instance.retrieved_at is None:
+            return "&#10004; <small>[<a href='#' data-pk='%s' class='editable-click package-pickup'>click when picked up</a>]</small>" % instance.id
+        else:
+            return ""
+
+    def get_queryset(self):
+        # when someone picks up a package we don't want it to disappear
+        # immediately, so show packages picked up within the past hour
+        return Package.on_site.filter(Q(retrieved_at=None) | Q(retrieved_at__gte=timezone.now()-timedelta(hours=1))) \
+            .order_by('recipient__user__last_name')
+
 @permission_required(CAN_MANAGE_PACKAGES_PERMISSION)
-def packages(request):
-    payload = {}
-    return render_to_response('desk/packages.html', payload, context_instance=RequestContext(request))
+def package_pickup(request):
+    pk = request.POST['pk']
+    if pk is not None:
+        Package.on_site.get(pk=pk).retrieved()
+        return HttpResponse("ok")
+    return HttpResponseBadRequest("bad")
 
 # permission_required() via urls.py
 class GuestlistDatatableView(DatatableView):

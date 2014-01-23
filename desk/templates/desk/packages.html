@@ -1,7 +1,65 @@
 {% extends "desk/base.html" %}
 {% block classPackages %}class="active"{% endblock %}
+
+{% block static %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+    <!-- Initialization for x-editable tables -->
+    <script type="text/javascript">
+        $.fn.editable.defaults.mode = 'inline';
+        datatableview.auto_initialize = false;
+        $(function(){
+            var xeditable_options = {'emptytext': 'click to add a note'};
+            datatableview.initialize($('.datatable'), {
+                fnRowCallback: datatableview.make_xeditable(xeditable_options),
+            });
+        });
+
+        $(document).ready(function(){
+            $('.datatable').click(function(e){
+                if ($(e.target).hasClass('package-pickup')) {
+                    e.preventDefault();
+                    e = $(e.target);
+                    $.ajax({
+                      type: 'POST',
+                      url: "pickup/",
+                      data: {pk: e.data('pk')},
+                      success: function(){
+                        e.parent().parent().fadeOut(function() {
+                          $('.datatable').dataTable().fnStandingRedraw();
+                        });
+                      },
+                    });
+                }
+            });
+        });
+
+        <!-- http://stackoverflow.com/questions/9999305/calling-fnstandingredraw-to-retain-the-current-pagination-settings-in-datatables -->
+        (function($) {
+            $.fn.dataTableExt.oApi.fnStandingRedraw = function(oSettings) {
+                if(oSettings.oFeatures.bServerSide === false){
+                    var before = oSettings._iDisplayStart;
+
+                    oSettings.oApi._fnReDraw(oSettings);
+
+                    // iDisplayStart has been reset to zero - so lets change it back
+                    oSettings._iDisplayStart = before;
+                    oSettings.oApi._fnCalculateEnd(oSettings);
+                }
+
+                // draw the 'current' page
+                oSettings.oApi._fnDraw(oSettings);
+            };
+        })(window.jQuery);
+
+    </script>
+{% endblock %}
+
 {% block subcontent %}
 
 <h1>Packages</h1>
+
+{{ datatable }}
 
 {% endblock %}

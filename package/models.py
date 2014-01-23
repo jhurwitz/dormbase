@@ -22,6 +22,7 @@ from django import forms
 from residents.models import Resident
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
+from django.utils import timezone
 
 class Package(models.Model):
     recipient = models.ForeignKey(Resident)
@@ -44,6 +45,11 @@ class Package(models.Model):
     @property
     def at_recipients_dorm(self):
         return self.at_dorm == self.recipient.dorm
+
+    def retrieved(self):
+        if self.retrieved_at is None:
+            self.retrieved_at = timezone.now()
+            self.save()
 
 class PackageForm(forms.ModelForm):
     class Meta:

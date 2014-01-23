@@ -19,12 +19,14 @@
 
 from django.conf.urls import patterns, url
 from guestlist.models import CAN_VIEW_GUESTLISTS_PERMISSION
+from package.models import CAN_MANAGE_PACKAGES_PERMISSION
 from common.lib import permission_required
 import views
 
 urlpatterns = patterns('desk.views',
     url(r'^$', views.dashboard),
-    url(r'^packages/$', views.packages),
+    url(r'^packages/$', permission_required(CAN_MANAGE_PACKAGES_PERMISSION)(views.PackageDatatableView.as_view()), name='desk.views.packages'),
+    url(r'^packages/pickup/$', views.package_pickup),
     url(r'^guestlists/$', permission_required(CAN_VIEW_GUESTLISTS_PERMISSION)(views.GuestlistDatatableView.as_view()), name='desk.views.guestlists'),
     url(r'^deskitems/$', views.deskitems),
 )
