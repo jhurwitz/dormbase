@@ -60,6 +60,14 @@
 
 <h1>Packages</h1>
 
+<h3>Scan a package</h3>
+
+When new packages arrive, <a href="{% url 'desk.views.package_scan' %}">scan them</a>!
+
+<h3>Packages for pickup</h3>
+
+Desk has {{ num_packages }} package{{ num_packages|pluralize }} waiting for pickup:
+
 {{ datatable }}
 
 {% endblock %}

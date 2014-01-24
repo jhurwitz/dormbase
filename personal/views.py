@@ -73,6 +73,7 @@ def guestlist_add(request):
             g.starts_on = form.cleaned_data['starts_on']
             g.expires_on = form.cleaned_data['expires_on']
             g.save()
+            # TODO email the user about their package
             return HttpResponseRedirect(reverse(guestlist))
     else:
         form = GuestlistEntryForm(initial = {'is_mit_student': True})

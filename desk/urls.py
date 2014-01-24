@@ -26,6 +26,7 @@ import views
 urlpatterns = patterns('desk.views',
     url(r'^$', views.dashboard),
     url(r'^packages/$', permission_required(CAN_MANAGE_PACKAGES_PERMISSION)(views.PackageDatatableView.as_view()), name='desk.views.packages'),
+    url(r'^packages/scan/$', views.package_scan),
     url(r'^packages/pickup/$', views.package_pickup),
     url(r'^guestlists/$', permission_required(CAN_VIEW_GUESTLISTS_PERMISSION)(views.GuestlistDatatableView.as_view()), name='desk.views.guestlists'),
     url(r'^deskitems/$', views.deskitems),

@@ -23,6 +23,10 @@ from residents.models import Resident
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 from django.utils import timezone
+import autocomplete_light
+autocomplete_light.autodiscover()
+
+from residents import autocomplete_light_registry
 
 class Package(models.Model):
     recipient = models.ForeignKey(Resident)
@@ -54,6 +58,12 @@ class Package(models.Model):
 class PackageForm(forms.ModelForm):
     class Meta:
         model = Package
+        fields = ['recipient', 'notes', 'tracking_number']
+    recipient = forms.ModelChoiceField(
+        Resident.on_site.all(),
+        widget = autocomplete_light.ChoiceWidget(
+            "ResidentAutocomplete",
+            autocomplete_js_attributes={'placeholder': 'First, last, or username'}))
 
 # if you change these, make sure to update the fixtures!
 CAN_MANAGE_PACKAGES_PERMISSION = "can_manage_packages"

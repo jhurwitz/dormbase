@@ -23,7 +23,8 @@ from django import forms
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib import auth
 from django.db.models import Q
-from package.models import Package, CAN_MANAGE_PACKAGES_PERMISSION
+from package.models import Package, PackageForm, CAN_MANAGE_PACKAGES_PERMISSION
+from django.contrib.sites.models import Site
 from residents.models import Resident
 from deskitem.models import CAN_ADD_DESKITEMS_PERMISSION, CAN_LOAN_DESKITEMS_PERMISSION
 from guestlist.models import GuestlistEntry
@@ -33,6 +34,7 @@ from datatableview.views import DatatableView, XEditableDatatableView
 from datatableview import helpers
 from datetime import timedelta
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 @permission_required(CAN_VIEW_DESK_SITE_PERMISSION)
 def dashboard(request):
@@ -68,9 +70,14 @@ class PackageDatatableView(XEditableDatatableView):
 
     def get_queryset(self):
         # when someone picks up a package we don't want it to disappear
-        # immediately, so show packages picked up within the past hour
-        return Package.on_site.filter(Q(retrieved_at=None) | Q(retrieved_at__gte=timezone.now()-timedelta(hours=1))) \
+        # immediately, so show packages picked up within the past 5 minutes
+        return Package.on_site.filter(Q(retrieved_at=None) | Q(retrieved_at__gte=timezone.now()-timedelta(minutes=5))) \
             .order_by('recipient__user__last_name')
+
+    def get_context_data(self, **kwargs):
+        context = super(PackageDatatableView, self).get_context_data(**kwargs)
+        context['num_packages'] = Package.on_site.filter(retrieved_at=None).count()
+        return context
 
 @permission_required(CAN_MANAGE_PACKAGES_PERMISSION)
 def package_pickup(request):
@@ -79,6 +86,29 @@ def package_pickup(request):
         Package.on_site.get(pk=pk).retrieved()
         return HttpResponse("ok")
     return HttpResponseBadRequest("bad")
+
+@permission_required(CAN_MANAGE_PACKAGES_PERMISSION)
+def package_scan(request):
+    message = None
+    if request.method == 'POST':
+        form = PackageForm(request.POST)
+        if form.is_valid():
+            p = Package()
+            p.at_dorm = Site.objects.get_current()
+            p.recipient = form.cleaned_data['recipient']
+            p.notes = form.cleaned_data['notes']
+            p.tracking_number = form.cleaned_data['tracking_number']
+            p.save()
+            form = PackageForm()
+            message = "Successfully scanned package for %s" % p.recipient.full_name
+    else:
+        form = PackageForm()
+
+    payload = {'form': form, 'done_url': reverse('desk.views.packages')}
+    if message is not None:
+        payload['message'] = message
+    return render_to_response('package/package_form.html', payload, context_instance=RequestContext(request))
+
 
 # permission_required() via urls.py
 class GuestlistDatatableView(DatatableView):

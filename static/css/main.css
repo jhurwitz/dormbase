@@ -3867,6 +3867,10 @@ h6 {
     color: #999999;
     line-height: 35px;
 }
+div.success_message {
+  padding: 5px;
+  margin-bottom: 10px;
+}
 
 @font-face {
   font-family: 'Glyphicons Halflings';
