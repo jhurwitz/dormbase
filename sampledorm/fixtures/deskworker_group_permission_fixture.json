@@ -4,7 +4,7 @@
         "fields": {
             "permission": 100,
             "object_pk": 1,
-            "group": ["Sample Dorm Deskworkers"],
+            "group": ["Sample House Deskworkers"],
             "content_type": ["sites", "site"]
         }
     },
@@ -13,7 +13,7 @@
         "fields": {
             "permission": 102,
             "object_pk": 1,
-            "group": ["Sample Dorm Deskworkers"],
+            "group": ["Sample House Deskworkers"],
             "content_type": ["sites", "site"]
         }
     },
@@ -22,7 +22,7 @@
         "fields": {
             "permission": 103,
             "object_pk": 1,
-            "group": ["Sample Dorm Deskworkers"],
+            "group": ["Sample House Deskworkers"],
             "content_type": ["sites", "site"]
         }
     },
@@ -31,7 +31,7 @@
         "fields": {
             "permission": 104,
             "object_pk": 1,
-            "group": ["Sample Dorm Deskworkers"],
+            "group": ["Sample House Deskworkers"],
             "content_type": ["sites", "site"]
         }
     },
@@ -40,7 +40,7 @@
         "fields": {
             "permission": 105,
             "object_pk": 1,
-            "group": ["Sample Dorm Deskworkers"],
+            "group": ["Sample House Deskworkers"],
             "content_type": ["sites", "site"]
         }
     }

@@ -7,63 +7,24 @@
     <img id="features" src="/static/img/features.jpg" />
     <a href="{% url 'directory' %}" id="search" class="feature">Search<span></span></a>
     <a href="{% url 'menus.views.menus' %}" id="menus" class="feature">Menus<span></span></a>
-    <a href="{% url 'desk.views.dashboard' %}" id="guestlist" class="feature">Guestlist<span></span></a>
+    <a href="{% url 'personal.views.guestlist' %}" id="guestlist" class="feature">Guestlist<span></span></a>
     <a href="{% url 'nextbus.views.nextbus' %}" id="shuttles" class="feature">Shuttles<span></span></a>
-    <a href="{% url 'desk.views.dashboard' %}" id="packages" class="feature">Packages<span></span></a>
+    <a href="{% url 'personal.views.packages' %}" id="packages" class="feature">Packages<span></span></a>
     <a href="{% url 'laundry.views.laundry' %}" id="laundry" class="feature">Laundry<span></span></a>
   </div>
   <div id="right">
     <div id="welcome" class="info-box">
-      <h1>Welcome</h1>
+      <h1>Welcome to {{ site.name }}'s Dormbase</h1>
 
       <p>Dormbase is a web-based system that provides MIT
       dormitories with the tools and services they need for daily
-      operation. It is an open source software project that was
-      started by <a href="http://simmons.mit.edu" target="blank">Simmons Tech</a> in response to their
-      and the resident’s need for reliable, modern, and user-friendly
-      online services. Dormbase means a consistent user experience
-      across all of MIT’s dorms, accessible to residents, desk
-      workers, and administration. It is a community project that
-      solves a community problem.</p>
+      operation. It is an <a href="https://github.com/dormbase/dormbase">open source software project</a> that was
+      started by a group of students from Simmons Hall in spring 2012.</p>
 
-      <p>MIT’s current dormitory systems are not representative of the
-      Institute. They lack oversight and are highly fragmented,
-      making updates and maintenance difficult. These systems are
-      also unfriendly. Information is obscured by poorly designed
-      interfaces and fundamental use cases are time
-      consuming. Inadequate attention was paid to the user’s needs,
-      dissuading residents from taking advantage of online
-      resources.</p>
+      <p><a href="https://github.com/jhurwitz/dormbase">This fork</a> of Dormbase is being developed by Jacob Hurwitz for 6.UAP, with the goal of getting Dormbase into a stable state so that we can start onboarding new contributors and developing new features.</p>
 
-      <p>Dormbase offers what no other system on campus can: It just works.</p>
-    </div>
-    <div id="team" class="info-box">
-      <h1>The Team</h1>
-      <div id="team-photos">
-	<div class="photo">
-	  <a href="http://www.linkedin.com/in/achernya" ><img src="/static/img/alex-large.jpg" alt="Alex Chernyakhovsky" width="100" height="125" /></a>
-	  Alex '14
-	</div>
-	<div class="photo">
-	  <a href="http://www.linkedin.com/in/drewdennison" ><img src="/static/img/drew-large.jpg" alt="Drew Dennison" width="100" height="125" /></a>
-	  Drew '13
-	</div>
-	<div class="photo">
-	  <a href="http://www.linkedin.com/in/omalley1" ><img src="/static/img/luke-large.jpg" alt="Luke O'Malley" width="100" height="125" /></a>
-	  Luke '14
-	</div>
-	<div class="photo">
-	  <a href="http://cosmosdarwin.com/" ><img src="/static/img/cosmos-large.jpg" alt="Cosmos Darwin" width="100" height="125" /></a>
-	  Cosmos '15
-	</div>
-	<div class="photo">
-	  <a href="http://www.linkedin.com/in/isaacevans" ><img src="/static/img/isaac-large.jpg" alt="Isaac Evans" width="100" height="125" /></a>
-	  Isaac '13
-	</div>
-      </div>
-      <p>The core Dormbase team consists of four
-      dedicated developers and a designer. The project, however,
-      has recieved support from numerous other contributors.</p>
+      <p>Dormbase is designed to be modular so that each dorm can pick which parts it wants, and designed to be easy to develop on so that small groups of developers at individual dorms can add custom functionality to their Dormbase installations.</p>
+
     </div>
   </div>
 </div>

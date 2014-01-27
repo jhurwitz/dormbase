@@ -18,10 +18,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.shortcuts import render_to_response
-from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-import feedparser
+from django.contrib.sites.models import Site
 
 def home(request):
-    return render_to_response('index.html', context_instance = RequestContext(request))
+    payload = {'site': Site.objects.get_current()}
+    return render_to_response('index.html', payload, context_instance=RequestContext(request))

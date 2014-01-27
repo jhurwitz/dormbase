@@ -127,7 +127,7 @@ TEMPLATE_DIRS = (
 
 SITE_ID = 1
 DOMAIN_NAME = "localhost"
-DORM_NAME = "Sample Dorm"
+DORM_NAME = "Sample House"
 
 # options that each dorm ("site") can customize
 
